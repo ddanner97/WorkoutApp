@@ -1,0 +1,29 @@
+form {
+    display: grid;
+    grid-template-columns: 10% 90%;
+
+    * {
+        border-style: none;
+        background: #fefefe;
+        font-size: 1rem;
+    }
+
+    input {
+        border-radius: 0 5px 5px 0;
+        color: gray;
+        padding: 10px;
+
+        &:focus { 
+            outline: none !important;
+        }
+
+
+    }
+
+    button {
+        border-radius: 5px 0 0 5px;
+        color: #CCD2E3;
+        cursor: pointer;
+    }
+
+}
