@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 function Exercise({ exercise }) {
     return (
-        <Link to={`exercise/${exercise.exercise_id}`} style={{ textDecoration: 'none' }}>
+        <Link to={`exercise/${exercise.id}`} style={{ textDecoration: 'none' }}>
             <div>
                 <h3>{exercise.name} </h3>
             </div>

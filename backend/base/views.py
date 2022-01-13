@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.serializers import Serializer
 
 from .models import *
-from .serializers import   ProgramSerializer, RoutineSerializer, ExerciseRoutineSerializer, WorkoutParameterSerializer 
+from .serializers import ProgramSerializer, RoutineSerializer, ExerciseRoutineSerializer, ExerciseSerializer, WorkoutParameterSerializer 
 
 # Create your views here.
 @api_view(['GET'])
@@ -27,33 +27,27 @@ def getPrograms(request):
 
 #ROUTINES VIEW
 @api_view(['GET'])
-def getRoutines(request, routine_pk):
-    programs = Program.objects.get(id=routine_pk)
+def getRoutines(request, program_pk):
+    programs = Program.objects.get(id=program_pk)
     routines = Routine.objects.all().filter(program=programs.id)
     serializer = RoutineSerializer(routines, many=True)
 
-    return Response(serializer.data)
-
-#EXERCISES VIEW
-@api_view(['GET'])
-def getExercises(request, routine_pk, exercise_pk):
-    routines = Routine.objects.get(id=routine_pk)
-    exerciseRoutine = ExerciseRoutine.objects.all().filter(routine=routines.id)
-    serializer = ExerciseRoutineSerializer(exerciseRoutine, many=True)
+    print(routines)
 
     return Response(serializer.data)
 
 #EXERCISES VIEW
 @api_view(['GET'])
-def getExercises(request, routine_pk, exercise_pk):
-    routines = Routine.objects.get(id=routine_pk)
-    exerciseRoutine = ExerciseRoutine.objects.all().filter(routine=exercise_pk)
+def getExercises(request, program_pk, routine_pk):
+   
+    exerciseRoutine = ExerciseRoutine.objects.all().filter(routine=routine_pk)
     exercises = []
 
     # Get all exercises
-    for x in exerciseRoutine:
-        exercises.append(Exercise.objects.get(id=x.exercise.id))
+    for i in exerciseRoutine:
+        exercise = Exercise.objects.get(id=i.exercise.id)
+        exercises.append(exercise)
 
-    serializer = ExerciseRoutineSerializer(exercises, many=True)
+    serializer = ExerciseSerializer(exercises, many=True)
 
     return Response(serializer.data)
