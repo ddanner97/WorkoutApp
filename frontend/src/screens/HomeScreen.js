@@ -1,37 +1,44 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-// import '../static/styles/screens/WorkoutScreen/workoutscreen.css'
+
+//Redux Imports
+import { useDispatch, useSelector } from 'react-redux';
+import { listPrograms } from '../redux/actions/programActions'
 
 //Import Components
 import SearchBar from '../components/SearchBar'
 import Program from '../components/Program'
+import Loader from '../components/Loader';
+import ErrorMessage from '../components/ErrorMessage';
 
 function HomeScreen() {
-    const [programs, setPrograms] = useState([])
+    const dispatch = useDispatch()
+
+    const programList = useSelector(state => state.programList)
+    const { error, loading, programs } = programList
 
     useEffect(() => {
 
-        async function fetchPrograms() {
-            const { data } =  await axios.get('/api/programs/')
-            setPrograms(data)
-        }
+        dispatch(listPrograms())
 
-        fetchPrograms()
-
-    }, [])
+    }, [dispatch])
 
     return (
         <div className="screen-container">
-            <h3 className="page-title">My Programs</h3>
+            <h1 className="page-title">My Programs</h1>
 
             <SearchBar/>
 
-            <div className="card-container">
-                {/* render Program */}
-                {programs.map(program => (
-                    <Program key={program.id} program={program}/>
-                ))}
-            </div>
+            { loading ? <Loader/>
+                : error ? <ErrorMessage>{error}</ErrorMessage>
+                    :
+                    <div className="card-container">
+                        {/* render Program */}
+                        {programs.map(program => (
+                            <Program key={program.id} program={program}/>
+                        ))}
+                    </div>
+
+            }
         </div>
     )
 }

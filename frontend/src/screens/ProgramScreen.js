@@ -2,25 +2,29 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
 import axios from 'axios'
 
+//Redux Imports
+import { useDispatch, useSelector } from 'react-redux';
+import { listProgramRoutines} from '../redux/actions/programActions'
+
 //Import Components
 import SearchBar from '../components/SearchBar'
 import Routine from '../components/Routine'
+import Loader from '../components/Loader';
+import ErrorMessage from '../components/ErrorMessage';
 
 function ProgramScreen() {
     const { id } = useParams()
 
-    const [routines, setRoutines] = useState([])
+    const dispatch = useDispatch()
+
+    const programRoutines = useSelector(state => state.programRoutines)
+    const { error, loading, routines } = programRoutines
 
     useEffect(() => {
 
-        async function fetchRoutines() {
-            const { data } =  await axios.get(`/api/programs/${id}`)
-            setRoutines(data)
-        }
+        dispatch(listProgramRoutines(id))
 
-        fetchRoutines()
-
-    }, [])
+    }, [dispatch])
 
     return (
         <div className="screen-container">
@@ -28,12 +32,16 @@ function ProgramScreen() {
 
             <SearchBar/>
 
-            <div className="card-container">
-                {routines.map((routine) => (
-                    // Render Routines
-                    <Routine key={routine.id} routine={routine}/>
-                ))}
-            </div>
+            { loading ? <Loader/>
+                : error ? <ErrorMessage>{error}</ErrorMessage>
+                    :
+                    <div className="card-container">
+                        {routines.map((routine) => (
+                            // Render Routines
+                            <Routine key={routine.id} routine={routine}/>
+                        ))}
+                    </div>
+            }
         </div>
     )
 }

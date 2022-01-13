@@ -32,8 +32,6 @@ def getRoutines(request, program_pk):
     routines = Routine.objects.all().filter(program=programs.id)
     serializer = RoutineSerializer(routines, many=True)
 
-    print(routines)
-
     return Response(serializer.data)
 
 #EXERCISES VIEW
