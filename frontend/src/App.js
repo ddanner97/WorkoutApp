@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 //Import Screens
-import WorkoutScreen from './screens/WorkoutScreen'
+import HomeScreen from './screens/HomeScreen'
 import ProgramScreen from './screens/ProgramScreen'
 import RoutineScreen from './screens/RoutineScreen'
 
@@ -14,7 +14,7 @@ function App() {
       <Router>
         <main>
           <Routes>
-            <Route path='/' element={<WorkoutScreen />} exact />
+            <Route path='/' element={<HomeScreen />} exact />
             <Route path='/program/:id' element={<ProgramScreen />} exact />
             <Route path='/program/:id/routine/:id' element={<RoutineScreen />} exact />
           </Routes>

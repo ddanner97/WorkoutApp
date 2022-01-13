@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom'
 
 function Routine({ routine }) {
     return (
-        <Link to={`routine/${routine.routine_id}`} style={{ textDecoration: 'none' }}>
+        <Link to={`routine/${routine.id}`} style={{ textDecoration: 'none' }}>
             <div>
-                <h3>{routine.routine_name}</h3>
+                <h3>{routine.name}</h3>
             </div>
         </Link>
     )
