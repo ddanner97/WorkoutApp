@@ -15,7 +15,7 @@ function RoutineScreen() {
 
         async function fetchExercises() {
             const { data } =  await axios.get(`/api/programs/${id}/routine/${id}`)
-            console.log(data)
+            // console.log(data)
             setExercises(data)
         }
 
