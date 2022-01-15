@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
 import axios from 'axios'
+import store from '../redux/store';
 
 //Redux Imports
 import { useDispatch, useSelector } from 'react-redux';
-import { listProgramRoutines} from '../redux/actions/programActions'
+import { listProgramRoutines } from '../redux/actions/programActions'
 
 //Import Components
 import SearchBar from '../components/SearchBar'
@@ -13,6 +14,9 @@ import Loader from '../components/Loader';
 import ErrorMessage from '../components/ErrorMessage';
 
 function ProgramScreen() {
+    //Get state
+    let state = {...store.getState()}
+
     const { id } = useParams()
 
     const dispatch = useDispatch()
@@ -26,9 +30,23 @@ function ProgramScreen() {
 
     }, [dispatch])
 
+    //Get program name
+    const program_name = get_program(id)
+
+    function get_program (id) {
+        const programs = state.programList.programs
+
+        for (let i in programs) {
+            if (programs[i].id == id){
+                return programs[i]
+            }
+        }
+
+    }
+
     return (
         <div className="screen-container">
-            {/* <h3 className="page-title">{routines.name}</h3> */}
+            {/* <h2 className="page-title">{program_name.name}</h2> */}
 
             <SearchBar/>
 
