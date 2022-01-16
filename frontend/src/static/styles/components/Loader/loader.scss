@@ -1,0 +1,20 @@
+.loading {
+    display: flex;
+    justify-content: center;
+}
+
+.loading::after {
+    content: "";
+    width: 5rem;
+    height: 5rem;
+    border: 10px solid #dddddd;
+    border-top-color: #80a4ed;
+    border-radius: 50%;
+    animation: loading 1s ease infinite;
+}
+
+@keyframes loading {
+    to {
+        transform: rotate(1turn);
+    }
+}

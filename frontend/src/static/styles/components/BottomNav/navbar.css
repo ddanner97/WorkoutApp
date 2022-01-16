@@ -1,0 +1,25 @@
+.navbar {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  background-color: #fefefe;
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+}
+
+.navbar a {
+  color: #80a4ed;
+  text-align: center;
+  padding: .5rem .5rem;
+  text-decoration: none;
+  font-size: 2em;
+}
+
+.navbar .navbar a:hover {
+  background-color: #80a4ed63;
+}
+
+.navbar .navbar a.active {
+  background-color: #80a4ed63;
+}
+/*# sourceMappingURL=navbar.css.map */
