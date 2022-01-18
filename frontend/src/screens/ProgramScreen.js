@@ -17,6 +17,7 @@ function ProgramScreen() {
     //Get state
     let state = {...store.getState()}
 
+    //Get id passed
     const { id } = useParams()
 
     const dispatch = useDispatch()

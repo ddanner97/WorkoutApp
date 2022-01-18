@@ -14,8 +14,8 @@ from rest_framework import status
 #import Django User Model
 from django.contrib.auth.models import User
 
-from .models import *
-from .serializers import ProgramSerializer, RoutineSerializer, ExerciseRoutineSerializer, ExerciseSerializer, WorkoutParameterSerializer, UserSerializer, UserSerializerWithToken
+from base.models import *
+from base.serializers import ProgramSerializer, RoutineSerializer, ExerciseRoutineSerializer, ExerciseSerializer, WorkoutParameterSerializer, UserSerializer, UserSerializerWithToken
 
 #Custom JWT Token Views
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -69,38 +69,5 @@ def getUserProfile(request):
 def getUsers(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
-
-    return Response(serializer.data)
-
-#PROGRAMS VIEW
-@api_view(['GET'])
-def getPrograms(request):
-    programs = Program.objects.all().filter(user=1) # Have to figure out how to find user
-    serializer = ProgramSerializer(programs, many=True)
-
-    return Response(serializer.data)
-
-#ROUTINES VIEW
-@api_view(['GET'])
-def getRoutines(request, program_pk):
-    programs = Program.objects.get(id=program_pk)
-    routines = Routine.objects.all().filter(program=programs.id)
-    serializer = RoutineSerializer(routines, many=True)
-
-    return Response(serializer.data)
-
-#EXERCISES VIEW
-@api_view(['GET'])
-def getExercises(request, program_pk, routine_pk):
-   
-    exerciseRoutine = ExerciseRoutine.objects.all().filter(routine=routine_pk)
-    exercises = []
-
-    # Get all exercises
-    for i in exerciseRoutine:
-        exercise = Exercise.objects.get(id=i.exercise.id)
-        exercises.append(exercise)
-
-    serializer = ExerciseSerializer(exercises, many=True)
 
     return Response(serializer.data)
