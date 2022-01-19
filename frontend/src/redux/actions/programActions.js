@@ -23,8 +23,8 @@ export const listPrograms = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: PROGRAM_LIST_FAIL,
-            payload: error.response && error.response.data.message 
-            ? error.response.data.message 
+            payload: error.response && error.response.data.detail
+            ? error.response.data.detail 
             : error.message
         })
     }
@@ -44,8 +44,8 @@ export const listProgramRoutines = (id) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: PROGRAM_ROUTINES_FAIL,
-            payload: error.response && error.response.data.message 
-            ? error.response.data.message 
+            payload: error.response && error.response.data.detail 
+            ? error.response.data.detail 
             : error.message
         })
     }
