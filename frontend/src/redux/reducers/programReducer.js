@@ -8,7 +8,7 @@ import {
     PROGRAM_ROUTINES_FAIL,
 } from '../constants/programConstants';
 
-export const programListReducer = (state = { programs: [] }, action) => {
+export const programListReducer = (state = { programs: []}, action) => {
     switch(action.type){
         case PROGRAM_LIST_REQUEST:
             return { loading: true, programs: [] }

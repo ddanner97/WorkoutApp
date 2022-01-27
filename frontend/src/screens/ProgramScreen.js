@@ -16,6 +16,7 @@ import ErrorMessage from '../components/ErrorMessage';
 function ProgramScreen() {
     //Get state
     let state = {...store.getState()}
+    const userId = state.userLogin.userInfo.id
 
     //Get id passed
     const { id } = useParams()
@@ -27,7 +28,7 @@ function ProgramScreen() {
 
     useEffect(() => {
 
-        dispatch(listProgramRoutines(id))
+        dispatch(listProgramRoutines(userId, id))
 
     }, [dispatch])
 

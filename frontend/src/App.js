@@ -1,22 +1,34 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
+//Authentication Check
+import PrivateRoute from './PrivateRoute';
+
 //Import Screens
 import HomeScreen from './screens/HomeScreen'
 import ProgramScreen from './screens/ProgramScreen'
 import RoutineScreen from './screens/RoutineScreen'
+import LoginScreen from './screens/LoginScreen';
 
 //Import Components
 import BottomNav from './components/BottomNav'
 
 function App() {
+
   return (
-    <div>
+    <div id="main">
       <Router>
         <main>
           <Routes>
-            <Route path='/' element={<HomeScreen />} exact />
-            <Route path='/program/:id' element={<ProgramScreen />} exact />
-            <Route path='/program/:id/routine/:id' element={<RoutineScreen />} exact />
+            <Route path='/login' element={<LoginScreen />}/>
+            <Route exact path='/' element={<PrivateRoute/>}>
+              <Route path='/' element={<HomeScreen />} exact />
+            </Route>
+            <Route exact path='/' element={<PrivateRoute/>}>
+              <Route path='/program/:id' element={<ProgramScreen />} exact />
+            </Route>
+            <Route exact path='/' element={<PrivateRoute/>}>
+              <Route path='/program/:id/routine/:id' element={<RoutineScreen />} exact />
+            </Route>
           </Routes>
         </main>
         <BottomNav/>

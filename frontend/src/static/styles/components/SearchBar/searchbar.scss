@@ -1,4 +1,4 @@
-form {
+.search-form {
     display: grid;
     grid-template-columns: 10% 90%;
 
@@ -25,5 +25,7 @@ form {
         color: #CCD2E3;
         cursor: pointer;
     }
+
+    filter: drop-shadow(0rem .25rem .25rem rgba(0, 0, 0, 0.25));
 
 }

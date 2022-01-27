@@ -16,6 +16,10 @@ font-weight: 500;
 
 // Top Level Screen-Container Class Styling 
 .screen-container {
+  position: absolute;
+  left:50%; 
+  transform:translateX(-50%);
+
   display: grid;
   grid-template-rows: repeat(auto, 1fr);
 
@@ -35,7 +39,6 @@ font-weight: 500;
   .card-container {    
     display: grid;
     grid-template-rows: repeat(auto, 3rem);
-
     width: 95vw;
     grid-gap: 1rem;
     margin-left: auto;
@@ -44,16 +47,14 @@ font-weight: 500;
     padding: 1rem;
 
     > * {
-
-      //box-sizing: content-box;
+      border-radius: 5px;
+      background-color: #80A4ED;
+      box-shadow: inset .1rem .1rem .75rem .1rem rgba(0, 0, 0, 0.17);
+      filter: drop-shadow(0rem .25rem .25rem rgba(0, 0, 0, 0.25));
 
       > div {
         margin: 2rem;
       }
-
-      border-radius: 5px;
-      background-color: #80A4ED;
-      box-shadow: inset .1rem .1rem .75rem .1rem rgba(0, 0, 0, 0.17);
     }
 
     h3 {
