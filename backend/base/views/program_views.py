@@ -12,15 +12,15 @@ from base.serializers import ProgramSerializer, RoutineSerializer, ExerciseRouti
 
 #PROGRAMS VIEW
 @api_view(['GET'])
-def getPrograms(request):
-    programs = Program.objects.all().filter(user=1) # Have to figure out how to find user
+def getPrograms(request, user_pk):
+    programs = Program.objects.all().filter(user=user_pk) # Have to figure out how to find user
     serializer = ProgramSerializer(programs, many=True)
 
     return Response(serializer.data)
 
 #ROUTINES VIEW
 @api_view(['GET'])
-def getRoutines(request, program_pk):
+def getRoutines(request, user_pk, program_pk):
     programs = Program.objects.get(id=program_pk)
     routines = Routine.objects.all().filter(program=programs.id)
     serializer = RoutineSerializer(routines, many=True)

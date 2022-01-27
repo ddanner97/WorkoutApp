@@ -1,25 +1,29 @@
-form {
+.search-form {
+  display: -ms-grid;
   display: grid;
-  grid-template-columns: 10% 90%;
+  -ms-grid-columns: 10% 90%;
+      grid-template-columns: 10% 90%;
+  -webkit-filter: drop-shadow(0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25));
+          filter: drop-shadow(0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25));
 }
 
-form * {
+.search-form * {
   border-style: none;
   background: #fefefe;
   font-size: 1rem;
 }
 
-form input {
+.search-form input {
   border-radius: 0 5px 5px 0;
   color: gray;
   padding: 10px;
 }
 
-form input:focus {
+.search-form input:focus {
   outline: none !important;
 }
 
-form button {
+.search-form button {
   border-radius: 5px 0 0 5px;
   color: #CCD2E3;
   cursor: pointer;

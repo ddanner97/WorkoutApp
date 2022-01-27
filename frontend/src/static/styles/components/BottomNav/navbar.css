@@ -1,6 +1,8 @@
 .navbar {
+  display: -ms-grid;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  -ms-grid-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
   background-color: #fefefe;
   position: fixed;
   bottom: 0;

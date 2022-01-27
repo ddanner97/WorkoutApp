@@ -9,8 +9,12 @@ import SearchBar from '../components/SearchBar'
 import Program from '../components/Program'
 import Loader from '../components/Loader';
 import ErrorMessage from '../components/ErrorMessage';
+import store from '../redux/store';
 
 function HomeScreen() {
+    const state = {...store.getState()}
+    const userId = state.userLogin.userInfo.id
+
     const dispatch = useDispatch()
 
     const programList = useSelector(state => state.programList)
@@ -18,7 +22,7 @@ function HomeScreen() {
 
     useEffect(() => {
 
-        dispatch(listPrograms())
+        dispatch(listPrograms(userId))
 
     }, [dispatch])
 

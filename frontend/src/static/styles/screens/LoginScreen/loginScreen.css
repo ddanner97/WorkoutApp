@@ -1,0 +1,48 @@
+.login-page {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -55%);
+          transform: translate(-50%, -55%);
+  color: #7697DA;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: (1fr)[auto];
+      grid-template-rows: repeat(auto 1fr);
+}
+
+.login-page > * {
+  text-align: center;
+}
+
+.login-page .fa-user {
+  font-size: 20rem;
+}
+
+.login-page .login-form {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 1fr  1fr 1fr;
+      grid-template-rows: 1fr  1fr 1fr;
+  grid-gap: .5rem;
+  padding: 2rem;
+}
+
+.login-page .login-form input {
+  border-radius: 5px;
+  color: gray;
+  padding: 10px;
+}
+
+.login-page .login-form input:focus {
+  outline: none !important;
+}
+
+.login-page .login-form button {
+  padding: .5rem;
+  width: 5rem;
+  margin: 0 auto;
+  border-style: solid;
+  border-radius: 5px;
+}
+/*# sourceMappingURL=loginScreen.css.map */
