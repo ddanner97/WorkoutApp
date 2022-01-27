@@ -11,7 +11,7 @@ class Program(models.Model):
     # lastWorkout = models.DateTimeField(auto_now_add=False) #I have to fix this 
 
     def __str__(self):
-        return str(self.name)
+        return str(self.name) + ' - ' + str(self.user.first_name) 
 
 class Routine(models.Model):
     name = models.CharField(max_length=200)
@@ -26,8 +26,7 @@ class Exercise(models.Model):
     user = models.ForeignKey(User, on_delete=CASCADE, null=False)
 
     def __str__(self):
-        return str(self.name)
-
+        return str(self.name) + ' - ' + str(self.user.first_name) 
 #Bridge to pair Exercises with Routines
 class ExerciseRoutine(models.Model): 
     routine = models.ForeignKey(Routine, on_delete=CASCADE, null=False)

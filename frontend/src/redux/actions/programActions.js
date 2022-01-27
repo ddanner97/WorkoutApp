@@ -9,11 +9,11 @@ import {
     PROGRAM_ROUTINES_FAIL,
 } from '../constants/programConstants';
 
-export const listPrograms = () => async (dispatch) => {
+export const listPrograms = (userId) => async (dispatch) => {
     try{
         dispatch({ type: PROGRAM_LIST_REQUEST})
 
-        const { data } =  await axios.get('/api/programs/')
+        const { data } =  await axios.get(`/api/programs/${userId}`)
 
         dispatch({
             type: PROGRAM_LIST_SUCCESS,
@@ -30,11 +30,11 @@ export const listPrograms = () => async (dispatch) => {
     }
 }
 
-export const listProgramRoutines = (id) => async (dispatch) => {
+export const listProgramRoutines = (userId, id) => async (dispatch) => {
     try{
         dispatch({ type: PROGRAM_ROUTINES_REQUEST})
 
-        const { data } =  await axios.get(`/api/programs/${id}`)
+        const { data } =  await axios.get(`/api/programs/${userId}/program_routines/${id}`)
 
         dispatch({
             type: PROGRAM_ROUTINES_SUCCESS,

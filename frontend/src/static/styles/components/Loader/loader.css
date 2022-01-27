@@ -1,6 +1,10 @@
 .loading {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .loading::after {
@@ -10,12 +14,21 @@
   border: 10px solid #dddddd;
   border-top-color: #80a4ed;
   border-radius: 50%;
-  animation: loading 1s ease infinite;
+  -webkit-animation: loading 1s ease infinite;
+          animation: loading 1s ease infinite;
+}
+
+@-webkit-keyframes loading {
+  to {
+    -webkit-transform: rotate(1turn);
+            transform: rotate(1turn);
+  }
 }
 
 @keyframes loading {
   to {
-    transform: rotate(1turn);
+    -webkit-transform: rotate(1turn);
+            transform: rotate(1turn);
   }
 }
 /*# sourceMappingURL=loader.css.map */
