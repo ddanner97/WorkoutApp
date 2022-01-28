@@ -12,6 +12,7 @@ import SearchBar from '../components/SearchBar'
 import Routine from '../components/Routine'
 import Loader from '../components/Loader';
 import ErrorMessage from '../components/ErrorMessage';
+import Header from '../components/Header';
 
 function ProgramScreen() {
     //Get state
@@ -48,7 +49,7 @@ function ProgramScreen() {
 
     return (
         <div className="screen-container">
-            {/* <h2 className="page-title">{program_name.name}</h2> */}
+            <Header/>
 
             <SearchBar/>
 

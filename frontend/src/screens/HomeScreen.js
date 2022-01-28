@@ -10,6 +10,9 @@ import Program from '../components/Program'
 import Loader from '../components/Loader';
 import ErrorMessage from '../components/ErrorMessage';
 import store from '../redux/store';
+import Header from '../components/Header';
+;
+
 
 function HomeScreen() {
     const state = {...store.getState()}
@@ -28,7 +31,7 @@ function HomeScreen() {
 
     return (
         <div className="screen-container">
-            <h1 className="page-title">My Programs</h1>
+            <Header/>
 
             <SearchBar/>
 

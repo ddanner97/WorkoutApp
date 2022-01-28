@@ -43,7 +43,7 @@ function LoginScreen(Location) {
 
     return (
         <FormContainer>
-            <div className="fas fa-user"></div>
+            <div className="fas fa-user user-icon-login"></div>
 
             {error && <ErrorMessage variant='danger'>{error}</ErrorMessage>}
             {loading && <Loader />}
@@ -71,7 +71,6 @@ function LoginScreen(Location) {
                     </input>
                 </div>
 
-                {/* <h2 onClick={submitHandler()}>Next</h2> */}
                 <button type="submit" variant="primary">Sign In</button>
             </form> 
 

@@ -5,6 +5,7 @@ import axios from 'axios'
 //Import Components
 import SearchBar from '../components/SearchBar'
 import Exercise from '../components/Exercise'
+import Header from '../components/Header';
 
 function RoutineScreen() {
     const { id } = useParams()
@@ -25,7 +26,7 @@ function RoutineScreen() {
 
     return (
         <div className="screen-container">
-            {/* <h3 className="page-title">{routine.routine_name}</h3> */}
+            <Header/>
 
             <SearchBar/>
 

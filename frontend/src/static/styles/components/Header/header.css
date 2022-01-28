@@ -1,0 +1,31 @@
+.header {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 67% 33%;
+      grid-template-columns: 67% 33%;
+}
+
+.header h1 {
+  text-align: right;
+}
+
+.header .topnav button {
+  border: none;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+}
+
+.header .topnav a {
+  text-decoration: none;
+}
+
+.header .topnav .dropbtn {
+  background-color: transparent;
+}
+
+.header .topnav #myLinks {
+  display: none;
+}
+/*# sourceMappingURL=header.css.map */

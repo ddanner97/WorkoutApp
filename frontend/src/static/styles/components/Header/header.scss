@@ -1,0 +1,32 @@
+.header {
+    display: grid;
+    grid-template-columns: 67% 33%;
+
+    h1 {
+        text-align: right;
+    }
+
+    .topnav{
+        
+        button {
+            border: none;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr; 
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .dropbtn {
+            background-color: transparent;
+        }
+
+        #myLinks {
+            display: none;
+        }
+
+    }
+
+}
