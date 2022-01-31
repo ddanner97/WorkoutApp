@@ -21,7 +21,7 @@ function Header() {
 
     //Logout function
     const logoutHandler = () => {
-        dispatch(logout())   
+        dispatch(logout())  
     }
 
     //dropdown menu
@@ -44,7 +44,7 @@ function Header() {
                 </button>
 
                 <div id="myLinks" className="dropdown-content">
-                    <button><Link to='/profile'><h4>Profile</h4></Link></button>
+                    {/* <button><Link to='/profile'><h4>Profile</h4></Link></button> */}
                     <button onClick={logoutHandler}><h4>logout</h4></button>
                 </div>
             </div>

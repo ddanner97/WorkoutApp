@@ -8,6 +8,8 @@ import HomeScreen from './screens/HomeScreen'
 import ProgramScreen from './screens/ProgramScreen'
 import RoutineScreen from './screens/RoutineScreen'
 import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen';
+
 
 //Import Components
 import BottomNav from './components/BottomNav'
@@ -20,6 +22,7 @@ function App() {
         <main>
           <Routes>
             <Route path='/login' element={<LoginScreen />}/>
+            <Route path='/register' element={<RegisterScreen />}/>
             <Route exact path='/' element={<PrivateRoute/>}>
               <Route path='/' element={<HomeScreen />} exact />
             </Route>
