@@ -33,9 +33,12 @@ function HomeScreen() {
         <div className="screen-container">
             <Header/>
 
+            <h1>My Programs</h1>
+
             <SearchBar/>
 
-            { loading ? <Loader/>
+            {/* Ternary operator: If loading == True render loading, If error == render error, else render page */}
+            { loading ? <Loader/> 
                 : error ? <ErrorMessage>{error}</ErrorMessage>
                     :
                     <div className="card-container">

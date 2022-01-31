@@ -27,6 +27,7 @@ class Exercise(models.Model):
 
     def __str__(self):
         return str(self.name) + ' - ' + str(self.user.first_name) 
+        
 #Bridge to pair Exercises with Routines
 class ExerciseRoutine(models.Model): 
     routine = models.ForeignKey(Routine, on_delete=CASCADE, null=False)
