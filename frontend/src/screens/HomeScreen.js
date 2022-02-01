@@ -11,7 +11,6 @@ import Loader from '../components/Loader';
 import ErrorMessage from '../components/ErrorMessage';
 import store from '../redux/store';
 import Header from '../components/Header';
-;
 
 
 function HomeScreen() {
