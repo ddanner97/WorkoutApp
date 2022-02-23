@@ -10,7 +10,6 @@ import Loader from '../components/Loader';
 import ErrorMessage from '../components/ErrorMessage';
 import Header from '../components/Header';
 import ExerciseParam from '../components/ExerciseParam'
-import AddRoutineForm from '../components/AddRoutineForm';
 import axios from 'axios';
 
 function AddRoutineScreen() {
