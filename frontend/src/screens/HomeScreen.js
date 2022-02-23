@@ -3,13 +3,13 @@ import React, { useState, useEffect } from 'react'
 //Redux Imports
 import { useDispatch, useSelector } from 'react-redux';
 import { listPrograms } from '../redux/actions/programActions'
+import store from '../redux/store';
 
 //Import Components
 import SearchBar from '../components/SearchBar'
 import Program from '../components/Program'
 import Loader from '../components/Loader';
 import ErrorMessage from '../components/ErrorMessage';
-import store from '../redux/store';
 import Header from '../components/Header';
 
 

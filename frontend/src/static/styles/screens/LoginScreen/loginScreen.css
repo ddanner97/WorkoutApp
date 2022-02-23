@@ -2,13 +2,10 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-50%, -55%);
-          transform: translate(-50%, -55%);
+  transform: translate(-50%, -55%);
   color: #7697DA;
-  display: -ms-grid;
   display: grid;
-  -ms-grid-rows: (1fr)[auto];
-      grid-template-rows: repeat(auto 1fr);
+  grid-template-rows: repeat(auto 1fr);
 }
 
 .login-page > * {
@@ -20,10 +17,8 @@
 }
 
 .login-page .login-form {
-  display: -ms-grid;
   display: grid;
-  -ms-grid-rows: 1fr  1fr 1fr;
-      grid-template-rows: 1fr  1fr 1fr;
+  grid-template-rows: 1fr  1fr 1fr;
   grid-gap: .5rem;
   padding: 2rem;
 }
