@@ -1,10 +1,7 @@
 .search-form {
-  display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 10% 90%;
-      grid-template-columns: 10% 90%;
-  -webkit-filter: drop-shadow(0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25));
-          filter: drop-shadow(0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25));
+  grid-template-columns: 10% 90%;
+  filter: drop-shadow(0rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25));
 }
 
 .search-form * {
