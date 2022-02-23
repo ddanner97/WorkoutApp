@@ -3,6 +3,14 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
+from drf_multiple_model.views import ObjectMultipleModelAPIView
+
+
+from collections import namedtuple
+
+# Extras for getExercises
+from rest_framework import serializers
+from django.db import models
 
 # Error status for registration
 from rest_framework import status
@@ -10,7 +18,7 @@ from rest_framework import status
 from base.models import *
 from base.serializers import ProgramSerializer, RoutineSerializer, ExerciseRoutineSerializer, ExerciseSerializer, WorkoutParameterSerializer
 
-#PROGRAMS VIEW
+#PROGRAMS VIEW 
 @api_view(['GET'])
 def getPrograms(request, user_pk):
     programs = Program.objects.all().filter(user=user_pk) # Have to figure out how to find user
