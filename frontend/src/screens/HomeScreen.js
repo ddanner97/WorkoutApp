@@ -11,6 +11,7 @@ import Program from '../components/Program'
 import Loader from '../components/Loader';
 import ErrorMessage from '../components/ErrorMessage';
 import Header from '../components/Header';
+;
 
 
 function HomeScreen() {
