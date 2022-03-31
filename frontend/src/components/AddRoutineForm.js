@@ -27,6 +27,8 @@ function AddRoutineScreen() {
 
     // Array of programs {value -> id} {text -> name}
     let programOptions = useSelector(state => state.programList.programs)
+    programOptions.unshift('New Program')
+    console.log(programOptions)
     
     // FUNCTIONS
     // Submit Handler to save exercises

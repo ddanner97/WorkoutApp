@@ -26,6 +26,18 @@ def getPrograms(request, user_pk):
 
     return Response(serializer.data)
 
+@api_view(['POST'])
+def createProgram(request):
+    user = request.user
+
+    program = Program.objects.create(
+        user = user,
+        name = 'Body Building Split'
+    )
+
+    serializer = ProgramSerializer(program, many=False)
+    return Response(serializer.data)
+
 #ROUTINES VIEW
 @api_view(['GET'])
 def getRoutines(request, user_pk, program_pk):
@@ -33,6 +45,18 @@ def getRoutines(request, user_pk, program_pk):
     routines = Routine.objects.all().filter(program=programs.id)
     serializer = RoutineSerializer(routines, many=True)
 
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def createRoutine(request):
+    user = request.user
+
+    routine = Routine.objects.create(
+        name = 'Upper Body day',
+        program = 'Body Building Split',
+    )
+
+    serializer = RoutineSerializer(routine, many=False)
     return Response(serializer.data)
 
 #EXERCISES VIEW
@@ -50,3 +74,8 @@ def getExercises(request, program_pk, routine_pk):
     serializer = ExerciseSerializer(exercises, many=True)
 
     return Response(serializer.data)
+
+#WORKOUT PARAMETERS VIEW
+# @api_view(['GET'])
+# def getWorkoutParams(request):
+#     return 

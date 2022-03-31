@@ -19,8 +19,9 @@ function ProgramScreen() {
     let state = {...store.getState()}
     const userId = state.userLogin.userInfo.id
 
-    //Get id passed
+    //Get id passed - program id which is then passed into action and used in axios call
     const { id } = useParams()
+    const program_id = id
 
     const dispatch = useDispatch()
 
@@ -29,23 +30,9 @@ function ProgramScreen() {
 
     useEffect(() => {
 
-        dispatch(listProgramRoutines(userId, id))
+        dispatch(listProgramRoutines(userId, program_id))
 
     }, [dispatch])
-
-    //Get program name
-    const program_name = get_program(id)
-
-    function get_program (id) {
-        const programs = state.programList.programs
-
-        for (let i in programs) {
-            if (programs[i].id == id){
-                return programs[i]
-            }
-        }
-
-    }
 
     return (
         <div className="screen-container">

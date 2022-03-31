@@ -18,6 +18,7 @@ function AddRoutineScreen() {
     //VARIABLES All useState()
     //Using state to keep track of what the selected program option is
     const [program, setProgram] = useState("")
+    const [newProgram, setNewProgram] = useState("")
     const [routineName, setRoutineName] = useState("")
 
     // State variables for Exercise form
@@ -34,12 +35,24 @@ function AddRoutineScreen() {
     // Submit handler to save workout
     const saveWorkout = async (e) => {
         e.preventDefault()
-        console.log(program, routineName, exerciseList)
 
-        await axios({
-            method: 'post',
-            url: 'http://localhost:800/api/'
-        })
+        const userInfo = state.userLogin.userInfo
+
+        const config = {
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+
+        // await axios.post(
+        //     `/api/programs/create-program/${newProgram}/`,
+        //     newProgram,
+        //     config
+        // )
+
+        console.log(program, newProgram, routineName, exerciseList, userInfo.token)
+        
     }
 
     // Submit Handler to save exercises [uses setExerciseList hook to update list of exercises]
@@ -88,14 +101,42 @@ function AddRoutineScreen() {
         />
     ))
 
+    //Old Program and New program components
+    // function OldProgram() {
+    //     return (
+    //         <label>Select Program
+    //             <select onChange={(e) => setProgram(e.target.value)} id="selectProgram">
+    //                 <option value="Select a Program">Choose a Program</option>
+    //                 {/* Map through each of the programs in our programOptions array 
+    //                 and return an option element with the appropriate attribute */}
+    //                 {programOptions.map((program) => <option key={program.name} value={program.id}>{program.name}</option>)}
+    //             </select>
+    //         </label>
+    //     )
+    // }
+
+    // function NewProgram() {
+    //     return (
+    //         <label>Program Name
+    //             <input
+    //                 type="text"
+    //                 placeholder="Enter New Program"
+    //                 value={newProgram}
+    //                 onChange={(e) => setNewProgram(e.target.value)}
+    //             />
+    //         </label> 
+    //     )
+    // }
+
     return (
         <div className="screen-container">
             <Header/>
-            
+
             {/* Form for adding exercises */}
             <form className="add-exercise" onSubmit={addExercise}>
                 {/* create selector that allows user to choose program */}
                 <div className="program-selector">
+
                     <label>Select Program
                         <select onChange={(e) => setProgram(e.target.value)} id="selectProgram">
                             <option value="Select a Program">Choose a Program</option>
@@ -104,6 +145,15 @@ function AddRoutineScreen() {
                             {programOptions.map((program) => <option key={program.name} value={program.id}>{program.name}</option>)}
                         </select>
                     </label>
+
+                    <label>Program Name
+                        <input
+                            type="text"
+                            placeholder="Enter New Program"
+                            value={newProgram}
+                            onChange={(e) => setNewProgram(e.target.value)}
+                        />
+                    </label> 
 
                     <label>Routine Name
                         <input
