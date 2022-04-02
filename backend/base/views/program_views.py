@@ -76,6 +76,21 @@ def getExercises(request, program_pk, routine_pk):
     return Response(serializer.data)
 
 #WORKOUT PARAMETERS VIEW
-# @api_view(['GET'])
-# def getWorkoutParams(request):
-#     return 
+@api_view(['GET'])
+def getWorkoutParams(request, routine_pk, exercise_pk):
+    # I don't think this is the most optimal way to query this... what if someone wants to have multiple
+    # of the same exercises in one workout? -> How I have my db and query set up now it would return 
+    # each of them... need to fix this 
+
+    # First filter object of ExerciseRoutine with matching routine ID and exercise ID
+    exerciseRoutine = ExerciseRoutine.objects.all().filter(routine=routine_pk).filter(exercise=exercise_pk)
+
+    # set bridge id
+    bridgeId = exerciseRoutine[0].id
+
+    # Search workout parameters for matching bridge_id
+    exercise = WorkoutParameter.objects.filter(bridge_id = bridgeId)
+
+    serializer = WorkoutParameterSerializer(exercise, many=True)
+
+    return Response(serializer.data)

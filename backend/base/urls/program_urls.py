@@ -12,4 +12,6 @@ urlpatterns = [
 
     path('<str:program_pk>/routine/<str:routine_pk>/', views.getExercises, name='exercises'),
 
+    path('routine/<str:routine_pk>/exercise/<str:exercise_pk>/', views.getWorkoutParams, name='workout-parameters'),
+
 ]
