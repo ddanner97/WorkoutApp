@@ -34,9 +34,21 @@ function ProgramScreen() {
 
     }, [dispatch])
 
+    // Get Program Name for display *Has to be a better way to do this such as passing in prop*
+    let programName = ''
+
+    for (let i = 0; i < state.programList.programs.length; i++){
+
+        if (id == state.programList.programs[i].id) {
+            programName = state.programList.programs[i].name
+        }
+    }
+
     return (
         <div className="screen-container">
             <Header/>
+
+            <h1>{programName}</h1>
 
             <SearchBar/>
 

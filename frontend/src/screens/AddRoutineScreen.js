@@ -45,12 +45,6 @@ function AddRoutineScreen() {
             }
         }
 
-        // await axios.post(
-        //     `/api/programs/create-program/${newProgram}/`,
-        //     newProgram,
-        //     config
-        // )
-
         console.log(program, newProgram, routineName, exerciseList, userInfo.token)
         
     }
@@ -101,33 +95,6 @@ function AddRoutineScreen() {
         />
     ))
 
-    //Old Program and New program components
-    // function OldProgram() {
-    //     return (
-    //         <label>Select Program
-    //             <select onChange={(e) => setProgram(e.target.value)} id="selectProgram">
-    //                 <option value="Select a Program">Choose a Program</option>
-    //                 {/* Map through each of the programs in our programOptions array 
-    //                 and return an option element with the appropriate attribute */}
-    //                 {programOptions.map((program) => <option key={program.name} value={program.id}>{program.name}</option>)}
-    //             </select>
-    //         </label>
-    //     )
-    // }
-
-    // function NewProgram() {
-    //     return (
-    //         <label>Program Name
-    //             <input
-    //                 type="text"
-    //                 placeholder="Enter New Program"
-    //                 value={newProgram}
-    //                 onChange={(e) => setNewProgram(e.target.value)}
-    //             />
-    //         </label> 
-    //     )
-    // }
-
     return (
         <div className="screen-container">
             <Header/>
@@ -145,15 +112,6 @@ function AddRoutineScreen() {
                             {programOptions.map((program) => <option key={program.name} value={program.id}>{program.name}</option>)}
                         </select>
                     </label>
-
-                    <label>Program Name
-                        <input
-                            type="text"
-                            placeholder="Enter New Program"
-                            value={newProgram}
-                            onChange={(e) => setNewProgram(e.target.value)}
-                        />
-                    </label> 
 
                     <label>Routine Name
                         <input

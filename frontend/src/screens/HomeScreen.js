@@ -44,7 +44,9 @@ function HomeScreen() {
                     <div className="card-container">
                         {/* render Program */}
                         {programs.map(program => (
+
                             <Program key={program.id} program={program}/>
+
                         ))}
                     </div>
 

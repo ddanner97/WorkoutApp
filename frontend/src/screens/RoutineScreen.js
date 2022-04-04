@@ -13,6 +13,7 @@ import Header from '../components/Header'
 import store from '../redux/store'
 import Loader from '../components/Loader'
 import ErrorMessage from '../components/ErrorMessage'
+import StopWatch from '../components/StopWatch'
 
 function RoutineScreen() {
     // Get routine id which was passed in through program screen components
@@ -63,12 +64,23 @@ function RoutineScreen() {
 
     }, [dispatch], )
 
+    // Get Program Name for display *Has to be a better way to do this such as passing in prop*
+    let routineName = ''
+
+    for (let i = 0; i < state.programRoutines.routines.length; i++){
+
+        if (id == state.programRoutines.routines[i].id) {
+            routineName = state.programRoutines.routines[i].name
+        }
+    }
+
     return (
         <div className="screen-container">
             <Header/>
 
-            <SearchBar/>
+            <h1>{routineName}</h1>
 
+            <StopWatch/>
          
             {/* Ternary operator: If loading == True render loading, If error == render error, else render page */}
             { paramLoading ? <Loader/> 
