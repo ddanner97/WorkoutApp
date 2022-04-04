@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router'
-import axios from 'axios'
 
 //Redux Imports
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
 import { listRoutineExercises } from '../redux/actions/programActions'
+import { listExerciseParams } from '../redux/actions/programActions'
 
 //Import Components
 import SearchBar from '../components/SearchBar'
 import Exercise from '../components/Exercise'
-import Header from '../components/Header';
+import Header from '../components/Header'
 import store from '../redux/store'
+import Loader from '../components/Loader'
+import ErrorMessage from '../components/ErrorMessage'
 
 function RoutineScreen() {
     // Get routine id which was passed in through program screen components
@@ -29,9 +31,9 @@ function RoutineScreen() {
         }
     }
 
-
     const dispatch = useDispatch()
 
+    // Getting Exercises
     // use spread operator to unpack elements from routineExercises
     const routineExercises = useSelector(state => state.routineExercises)
     const { error, loading, exercises } = routineExercises
@@ -42,18 +44,50 @@ function RoutineScreen() {
 
     }, [dispatch])
 
+    // Getting Parameters
+    const exerciseParameters = useSelector(state => state.exerciseParameters)
+    const { paramError, paramLoading, parameters } = exerciseParameters
+
+    useEffect(() => {
+        // Call Action once GET method for excercises is finished
+        if(exercises) {
+            // GET all exercise ids
+            const exerciseIdList = [];
+            
+            for (let i = 0; i < exercises.length; i++){
+                exerciseIdList.push(exercises[i].id)
+            }
+
+            dispatch(listExerciseParams(routine_id, exerciseIdList))  
+        }
+
+    }, [dispatch], )
+
     return (
         <div className="screen-container">
             <Header/>
 
             <SearchBar/>
 
-            <div className="card-container">
-                {exercises.map((exercise) => (
-                    // Render Routines
-                    <Exercise key={exercise.id} exercise={exercise}/>
-                ))}
-            </div>
+         
+            {/* Ternary operator: If loading == True render loading, If error == render error, else render page */}
+            { paramLoading ? <Loader/> 
+                : paramError ? <ErrorMessage>{error}</ErrorMessage>
+                    :
+                    <div className="card-container">
+                        {/* render Program */}
+                        {exercises.map((exercise, index) => (
+                            // Render Routines
+                            <Exercise key={exercise.id} exercise_params={parameters[index]} exercise={exercise}/>
+                        ))}
+                    </div>
+
+            }
+            {/* {exercises.map((exercise, index) => (
+                // Render Routines
+                <Exercise key={exercise.id} exercise_params={parameters[index]} exercise={exercise}/>
+            ))} */}
+          
         </div>
     )
 }

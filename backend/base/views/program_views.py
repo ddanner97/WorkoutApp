@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
-from drf_multiple_model.views import ObjectMultipleModelAPIView
+# from drf_multiple_model.views import ObjectMultipleModelAPIView
 
 
 from collections import namedtuple
@@ -75,7 +75,7 @@ def getExercises(request, program_pk, routine_pk):
 
     return Response(serializer.data)
 
-#WORKOUT PARAMETERS VIEW
+# #WORKOUT PARAMETERS VIEW
 @api_view(['GET'])
 def getWorkoutParams(request, routine_pk, exercise_pk):
     # I don't think this is the most optimal way to query this... what if someone wants to have multiple

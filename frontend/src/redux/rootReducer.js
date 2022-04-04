@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { programListReducer, programRoutinesReducer, routineExerciseReducer } from './reducers/programReducer'
+import { programListReducer, programRoutinesReducer, routineExerciseReducer, exerciseParamReducer } from './reducers/programReducer'
 import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
 
 const rootReducer = combineReducers({
@@ -8,6 +8,7 @@ const rootReducer = combineReducers({
     programList: programListReducer,
     programRoutines: programRoutinesReducer,
     routineExercises: routineExerciseReducer,
+    exerciseParameters: exerciseParamReducer,
 
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer
