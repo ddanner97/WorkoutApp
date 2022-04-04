@@ -88,7 +88,6 @@ export const listExerciseParams = (routine_id, exerciseIdList) => async (dispatc
         const exerciseParams2 = []
 
         for (let i = 0; i < exerciseIdList.length; i++){
-            console.log(exerciseIdList[i])
             exerciseParams.push(await axios.get(`/api/programs/routine/${routine_id}/exercise/${exerciseIdList[i]}`))
             const { data } = exerciseParams[i]
             exerciseParams2.push(data)

@@ -91,11 +91,6 @@ function RoutineScreen() {
                     </div>
 
             }
-            {/* {exercises.map((exercise, index) => (
-                // Render Routines
-                <Exercise key={exercise.id} exercise_params={parameters[index]} exercise={exercise}/>
-            ))} */}
-          
         </div>
     )
 }

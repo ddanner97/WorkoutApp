@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { listExerciseParams } from '../redux/actions/programActions'
 
 // Components import
-import Parameters from './Parameters';
 
 function Exercise({ exercise, exercise_params}) {
 
