@@ -10,6 +10,10 @@ import {
     ROUTINE_EXERCISES_SUCCESS,
     ROUTINE_EXERCISES_FAIL,
     ROUTINE_EXERCISES_REQUEST,
+
+    EXERCISE_PARAM_SUCCESS,
+    EXERCISE_PARAM_FAIL,
+    EXERCISE_PARAM_REQUEST,
 } from '../constants/programConstants';
 
 export const programListReducer = (state = { programs: []}, action) => {
@@ -53,6 +57,22 @@ export const routineExerciseReducer = (state = { exercises: [] }, action) => {
             return { loading: false, exercises: action.payload }
         
         case ROUTINE_EXERCISES_FAIL:
+            return { loading: false, error: action.payload }
+
+        default:
+            return state
+    }
+}
+
+export const exerciseParamReducer = (state = { parameters: [] }, action) => {
+    switch(action.type){
+        case EXERCISE_PARAM_REQUEST:
+            return { loading: true, parameters: [] }
+
+        case EXERCISE_PARAM_SUCCESS:
+            return { loading: false, parameters: action.payload }
+        
+        case EXERCISE_PARAM_FAIL:
             return { loading: false, error: action.payload }
 
         default:
