@@ -75,7 +75,7 @@ def getExercises(request, program_pk, routine_pk):
 
     return Response(serializer.data)
 
-# #WORKOUT PARAMETERS VIEW
+#WORKOUT PARAMETERS VIEW
 @api_view(['GET'])
 def getWorkoutParams(request, routine_pk, exercise_pk):
     # I don't think this is the most optimal way to query this... what if someone wants to have multiple
