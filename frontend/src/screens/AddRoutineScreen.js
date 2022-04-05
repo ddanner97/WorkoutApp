@@ -38,14 +38,14 @@ function AddRoutineScreen() {
 
         const userInfo = state.userLogin.userInfo
 
-        const config = {
-            headers: {
-                'Content-type': 'application/json',
-                Authorization: `Bearer ${userInfo.token}`
-            }
-        }
+        // const config = {
+        //     headers: {
+        //         'Content-type': 'application/json',
+        //         Authorization: `Bearer ${userInfo.token}`
+        //     }
+        // }
 
-        console.log(program, newProgram, routineName, exerciseList, userInfo.token)
+        console.log(program, routineName, exerciseList, userInfo.token)
         
     }
 

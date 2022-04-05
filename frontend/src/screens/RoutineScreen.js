@@ -34,23 +34,25 @@ function RoutineScreen() {
 
     const dispatch = useDispatch()
 
-    // Getting Exercises
-    // use spread operator to unpack elements from routineExercises
+    // List of Exercises -> use spread operator to unpack elements from routineExercises
     const routineExercises = useSelector(state => state.routineExercises)
     const { error, loading, exercises } = routineExercises
 
+    // Getting Parameters
+    const exerciseParameters = useSelector(state => state.exerciseParameters)
+    const { paramError, paramLoading, parameters } = exerciseParameters
+
+    // ** ACTIONS **
+    // Get exercises action
     useEffect(() => {
 
         dispatch(listRoutineExercises(program_id, routine_id))
 
     }, [dispatch])
 
-    // Getting Parameters
-    const exerciseParameters = useSelector(state => state.exerciseParameters)
-    const { paramError, paramLoading, parameters } = exerciseParameters
-
+    // Get Parameter action
     useEffect(() => {
-        // Call Action once GET method for excercises is finished
+        // Call Action once GET method for excrcises is finished
         if(exercises) {
             // GET all exercise ids
             const exerciseIdList = [];

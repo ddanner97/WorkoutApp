@@ -2,6 +2,10 @@ import {
     PROGRAM_LIST_REQUEST, 
     PROGRAM_LIST_SUCCESS, 
     PROGRAM_LIST_FAIL,
+
+    PROGRAM_DELETE_REQUEST,
+    PROGRAM_DELETE_SUCCESS,
+    PROGRAM_DELETE_FAIL,
     
     PROGRAM_ROUTINES_REQUEST, 
     PROGRAM_ROUTINES_SUCCESS, 
@@ -25,6 +29,22 @@ export const programListReducer = (state = { programs: []}, action) => {
             return { loading: false, programs: action.payload }
         
         case PROGRAM_LIST_FAIL:
+            return { loading: false, error: action.payload }
+
+        default:
+            return state
+    }
+}
+
+export const programDeleteReducer = (state = {}, action) => {
+    switch(action.type){
+        case PROGRAM_DELETE_REQUEST:
+            return { loading: true }
+
+        case PROGRAM_DELETE_SUCCESS:
+            return { loading: false, success: true }
+        
+        case PROGRAM_DELETE_FAIL:
             return { loading: false, error: action.payload }
 
         default:

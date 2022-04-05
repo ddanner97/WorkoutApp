@@ -2,14 +2,14 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 //Authentication Check
 import PrivateRoute from './PrivateRoute';
-//hello
+
 //Import Screens
 import HomeScreen from './screens/HomeScreen'
 import ProgramScreen from './screens/ProgramScreen'
 import RoutineScreen from './screens/RoutineScreen'
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
-import AddRoutineScreen from './screens/AddRoutineScreen';
+import AddScreen from './screens/AddScreen';
 
 
 //Import Components
@@ -34,8 +34,11 @@ function App() {
               <Route path='/program/:id/routine/:id' element={<RoutineScreen />} exact />
             </Route>
             <Route exact path='/' element={<PrivateRoute/>}>
-              <Route path='/add-workout' element={<AddRoutineScreen />} exact />
+              <Route path='/add-screen' element={<AddScreen />} exact />
             </Route>
+            {/* <Route exact path='/' element={<PrivateRoute/>}>
+              <Route path='/add-workout' element={<AddRoutineScreen />} exact />
+            </Route> */}
           </Routes>
         </main>
         <BottomNav/>

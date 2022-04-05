@@ -26,6 +26,12 @@ def getPrograms(request, user_pk):
 
     return Response(serializer.data)
 
+@api_view(['DELETE'])
+def deleteProgram(request, program_pk):
+    program = Program.objects.get(id=program_pk)
+    program.delete()
+    return Response('Product Deleted')
+
 @api_view(['POST'])
 def createProgram(request):
     user = request.user

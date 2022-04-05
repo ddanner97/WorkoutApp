@@ -3,6 +3,10 @@ import {
     PROGRAM_LIST_REQUEST, 
     PROGRAM_LIST_SUCCESS, 
     PROGRAM_LIST_FAIL,
+
+    PROGRAM_DELETE_REQUEST,
+    PROGRAM_DELETE_SUCCESS,
+    PROGRAM_DELETE_FAIL,
     
     PROGRAM_ROUTINES_REQUEST, 
     PROGRAM_ROUTINES_SUCCESS, 
@@ -31,6 +35,40 @@ export const listPrograms = (userId) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: PROGRAM_LIST_FAIL,
+            payload: error.response && error.response.data.detail
+            ? error.response.data.detail 
+            : error.message
+        })
+    }
+}
+
+export const deleteProgram = (program_id) => async (dispatch, getState) => {
+    try{
+        dispatch({ type: PROGRAM_DELETE_REQUEST})
+
+        const {
+            userLogin: { userInfo },
+        } = getState()
+
+        const config = {
+            header: {
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+
+        const { data } =  await axios.delete(
+            `/api/programs/program-delete/${program_id}`,
+            // config
+        )
+
+        dispatch({
+            type: PROGRAM_DELETE_SUCCESS,
+        })
+
+    } catch (error) {
+        dispatch({
+            type: PROGRAM_DELETE_FAIL,
             payload: error.response && error.response.data.detail
             ? error.response.data.detail 
             : error.message
