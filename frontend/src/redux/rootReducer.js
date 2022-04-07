@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import { 
     programListReducer, 
     programDeleteReducer,
+    programCreateReducer,
     programRoutinesReducer, 
     routineExerciseReducer, 
     exerciseParamReducer, 
@@ -10,7 +11,7 @@ import {
 
 import { 
     userLoginReducer, 
-    userRegisterReducer 
+    userRegisterReducer
 } from './reducers/userReducers';
 
 const rootReducer = combineReducers({
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     // Program Reducers
     programList: programListReducer,
     programDelete: programDeleteReducer,
+    programCreate: programCreateReducer,
     programRoutines: programRoutinesReducer,
     routineExercises: routineExerciseReducer,
     exerciseParameters: exerciseParamReducer,

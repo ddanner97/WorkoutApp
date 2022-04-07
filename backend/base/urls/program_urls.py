@@ -7,6 +7,7 @@ urlpatterns = [
     path('<str:user_pk>', views.getPrograms, name='programs'),
     path('program-delete/<str:program_pk>', views.deleteProgram, name='program-delete'),
     path('program-create/', views.createProgram, name='program-create'),
+    path('program-update/<str:program_pk>/', views.updateProgram, name='program-update'),
 
     path('<str:user_pk>/program_routines/<str:program_pk>/', views.getRoutines, name='routine'),
     path('routine-create/', views.createRoutine, name='routine-create'),

@@ -18,6 +18,7 @@ import Header from '../components/Header';
 
 function HomeScreen() {
     const state = {...store.getState()}
+    const { userInfo } = state.userLogin
     const userId = state.userLogin.userInfo.id
 
     const dispatch = useDispatch()
@@ -32,7 +33,7 @@ function HomeScreen() {
 
         dispatch(listPrograms(userId))
 
-    }, [dispatch, successDelete])
+    }, [dispatch, userInfo, successDelete])
 
     const deleteHandler = (program_id) => {
 

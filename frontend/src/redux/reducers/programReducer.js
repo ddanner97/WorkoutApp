@@ -6,6 +6,11 @@ import {
     PROGRAM_DELETE_REQUEST,
     PROGRAM_DELETE_SUCCESS,
     PROGRAM_DELETE_FAIL,
+
+    PROGRAM_CREATE_REQUEST,
+    PROGRAM_CREATE_SUCCESS,
+    PROGRAM_CREATE_FAIL,
+    PROGRAM_CREATE_RESET,         
     
     PROGRAM_ROUTINES_REQUEST, 
     PROGRAM_ROUTINES_SUCCESS, 
@@ -42,10 +47,29 @@ export const programDeleteReducer = (state = {}, action) => {
             return { loading: true }
 
         case PROGRAM_DELETE_SUCCESS:
-            return { loading: false, success: true }
+            return { loading: false, success: true, product: action.payload }
         
         case PROGRAM_DELETE_FAIL:
             return { loading: false, error: action.payload }
+
+        default:
+            return state
+    }
+}
+
+export const programCreateReducer = (state = {}, action) => {
+    switch(action.type){
+        case PROGRAM_CREATE_REQUEST:
+            return { loading: true }
+
+        case PROGRAM_CREATE_SUCCESS:
+            return { loading: false, success: true, program: action.payload }
+        
+        case PROGRAM_CREATE_FAIL:
+            return { loading: false, error: action.payload }
+
+        case PROGRAM_CREATE_RESET:
+            return { }
 
         default:
             return state

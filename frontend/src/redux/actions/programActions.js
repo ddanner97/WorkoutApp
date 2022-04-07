@@ -7,6 +7,10 @@ import {
     PROGRAM_DELETE_REQUEST,
     PROGRAM_DELETE_SUCCESS,
     PROGRAM_DELETE_FAIL,
+
+    PROGRAM_CREATE_REQUEST,
+    PROGRAM_CREATE_SUCCESS,
+    PROGRAM_CREATE_FAIL,
     
     PROGRAM_ROUTINES_REQUEST, 
     PROGRAM_ROUTINES_SUCCESS, 
@@ -51,15 +55,15 @@ export const deleteProgram = (program_id) => async (dispatch, getState) => {
         } = getState()
 
         const config = {
-            header: {
-                'Content-type': 'application/json',
-                Authorization: `Bearer ${userInfo.token}`
-            }
-        }
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
 
         const { data } =  await axios.delete(
             `/api/programs/program-delete/${program_id}`,
-            // config
+            config
         )
 
         dispatch({
@@ -69,6 +73,44 @@ export const deleteProgram = (program_id) => async (dispatch, getState) => {
     } catch (error) {
         dispatch({
             type: PROGRAM_DELETE_FAIL,
+            payload: error.response && error.response.data.detail
+            ? error.response.data.detail 
+            : error.message
+        })
+    }
+}
+
+export const createProgram = () => async (dispatch, getState) => {
+    try{
+        dispatch({ type: PROGRAM_CREATE_REQUEST})
+
+        const {
+            userLogin: { userInfo },
+        } = getState()
+
+        // Pulling out the current user we are logged in as 
+        const config = {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
+
+        // Make API call to create product
+        const { data } =  await axios.post(
+            `/api/programs/program-create/`,
+            {},
+            config
+        )
+
+        dispatch({
+            type: PROGRAM_CREATE_SUCCESS,
+            payload: data,
+        })
+
+    } catch (error) {
+        dispatch({
+            type: PROGRAM_CREATE_FAIL,
             payload: error.response && error.response.data.detail
             ? error.response.data.detail 
             : error.message

@@ -38,8 +38,20 @@ def createProgram(request):
 
     program = Program.objects.create(
         user = user,
-        name = 'Body Building Split'
+        name = 'Empty Name'
     )
+
+    serializer = ProgramSerializer(program, many=False)
+    return Response(serializer.data)
+
+@api_view(['PUT'])
+def updateProgram(request, program_pk):
+    data = request.data
+    program = Program.objects.get(id=program_pk)
+    
+    program.name = data['name']
+
+    program.save()
 
     serializer = ProgramSerializer(program, many=False)
     return Response(serializer.data)
