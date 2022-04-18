@@ -1,3 +1,3 @@
 # WorkoutApp
 WireFrame
-![alt text](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c3f990f5-a744-4b16-8057-c773d0a2538f/Screen_Shot_2021-12-21_at_6.35.58_PM.png)
+![alt text](https://www.notion.so/Workout-App-bc8e1051c46840978b2b8f5188a0ff29#b1cf27d834d144a2999125f7b1756022)
