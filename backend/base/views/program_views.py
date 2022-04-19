@@ -26,6 +26,13 @@ def getPrograms(request, user_pk):
 
     return Response(serializer.data)
 
+# Get single products
+@api_view(['GET'])
+def getProgram(request, program_pk):
+    program = Program.objects.get(id=program_pk)
+    serializer = ProgramSerializer(program, many=False)
+    return Response(serializer.data)
+
 @api_view(['DELETE'])
 def deleteProgram(request, program_pk):
     program = Program.objects.get(id=program_pk)

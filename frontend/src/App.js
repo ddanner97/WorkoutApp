@@ -10,6 +10,8 @@ import RoutineScreen from './screens/RoutineScreen'
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import AddScreen from './screens/AddScreen';
+import AddRoutineScreen from './screens/AddRoutineScreen';
+import ProductEditScreen from './screens/ProductEditScreen';
 
 
 //Import Components
@@ -36,9 +38,12 @@ function App() {
             <Route exact path='/' element={<PrivateRoute/>}>
               <Route path='/add-screen' element={<AddScreen />} exact />
             </Route>
-            {/* <Route exact path='/' element={<PrivateRoute/>}>
-              <Route path='/add-workout' element={<AddRoutineScreen />} exact />
-            </Route> */}
+            <Route exact path='/' element={<PrivateRoute/>}>
+              <Route path='/add-routine' element={<AddRoutineScreen />} exact />
+            </Route>
+            <Route exact path='/' element={<PrivateRoute/>}>
+              <Route path='/program/:id/edit' element={<ProductEditScreen />} exact />
+            </Route>
           </Routes>
         </main>
         <BottomNav/>

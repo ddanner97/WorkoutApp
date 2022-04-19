@@ -4,6 +4,10 @@ import {
     PROGRAM_LIST_SUCCESS, 
     PROGRAM_LIST_FAIL,
 
+    PROGRAM_DETAILS_REQUEST,
+    PROGRAM_DETAILS_SUCCESS,
+    PROGRAM_DETAILS_FAIL,
+
     PROGRAM_DELETE_REQUEST,
     PROGRAM_DELETE_SUCCESS,
     PROGRAM_DELETE_FAIL,
@@ -45,6 +49,30 @@ export const listPrograms = (userId) => async (dispatch) => {
         })
     }
 }
+
+/* ACTION CREATOR USED IN ProductScreen COMPONENT */
+// export const listProgramDetails = (id) => async (dispatch) => {
+//     try {
+//       dispatch({
+//         type: PROGRAM_DETAILS_REQUEST,
+//       });
+  
+//       const { data } = await axios.get(`/api/products/${id}`);
+  
+//       dispatch({
+//         type: PROGRAM_DETAILS_SUCCESS,
+//         payload: data,
+//       });
+//     } catch (error) {
+//       dispatch({
+//         type: PROGRAM_DETAILS_FAIL,
+//         payload:
+//           error.response && error.response.data.detail
+//             ? error.response.data.detail
+//             : error.message,
+//       });
+//     }
+//   };
 
 export const deleteProgram = (program_id) => async (dispatch, getState) => {
     try{

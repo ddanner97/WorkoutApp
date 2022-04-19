@@ -41,7 +41,7 @@ function AddScreen({ }) {
 
         if(successCreate) {
 
-            console.log(createdProgram);
+            // console.log(createdProgram);
             const redirect = `/program/${createdProgram.id}/edit`
             history(redirect)
 
@@ -68,6 +68,11 @@ function AddScreen({ }) {
 
                 <button onClick={createProgramHandler}>
                     + Create Program
+                </button>
+
+                
+                <button>
+                    <Link style={{ textDecoration: 'none', color: 'black' }} to={'/add-routine'}>Add Routine</Link>
                 </button>
 
         </div>

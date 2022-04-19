@@ -19,7 +19,7 @@ class Routine(models.Model):
     # lastWorkout 
 
     def __str__(self):
-        return str(self.name)
+        return str(self.name) + ' - ' + str(self.program) 
 
 class Exercise(models.Model):
     name = models.CharField(max_length=200)
