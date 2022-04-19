@@ -45,6 +45,22 @@ export const programListReducer = (state = { programs: []}, action) => {
     }
 }
 
+export const programDetailsReducer = (state = { program: []}, action) => {
+    switch(action.type){
+        case PROGRAM_DETAILS_REQUEST:
+            return { loading: true, ...state }
+
+        case PROGRAM_DETAILS_SUCCESS:
+            return { loading: false, program: action.payload }
+        
+        case PROGRAM_DETAILS_FAIL:
+            return { loading: false, error: action.payload }
+
+        default:
+            return state
+    }
+}
+
 export const programDeleteReducer = (state = {}, action) => {
     switch(action.type){
         case PROGRAM_DELETE_REQUEST:

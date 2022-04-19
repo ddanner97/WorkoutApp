@@ -15,11 +15,11 @@ import FormContainer from "../components/FormContainer";
 import { useDispatch, useSelector } from "react-redux";
 
 /* ACTION CREATORS */
-    // import { updateProgram } from "../redux/actions/programActions";
+// import { updateProgram } from "../redux/actions/programActions";
 // import { listProgramDetails, updateProgram } from "../redux/actions/programActions";
 
 /* ACTION TYPES */
-import { PROGRAM_UPDATE_RESET } from '../redux/constants/programConstants';
+// import { PROGRAM_UPDATE_RESET } from '../redux/constants/programConstants';
 
 function ProductEditScreen({ }) {
     const history = useNavigate();
@@ -45,7 +45,7 @@ function ProductEditScreen({ }) {
     // } = programUpdate;
 
     // useEffect(() => {
-    //     // CHECK IF PROGRAM WAS UDPATED
+    //     // CHECK IF PROGRAM WAS UPDATED
     //     if (successUpdate) {
     //         // If updated send to home screen
     //       dispatch({ type: PROGRAM_UPDATE_RESET });

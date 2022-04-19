@@ -50,6 +50,27 @@ export const listPrograms = (userId) => async (dispatch) => {
     }
 }
 
+export const listProgramDetails = (id) => async (dispatch) => {
+    try{
+        dispatch({ type: PROGRAM_DETAILS_REQUEST})
+
+        const { data } =  await axios.get(`/api/programs/program/${id}`)
+
+        dispatch({
+            type: PROGRAM_DETAILS_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: PROGRAM_DETAILS_FAIL,
+            payload: error.response && error.response.data.detail
+            ? error.response.data.detail 
+            : error.message
+        })
+    }
+}
+
 /* ACTION CREATOR USED IN ProductScreen COMPONENT */
 // export const listProgramDetails = (id) => async (dispatch) => {
 //     try {
