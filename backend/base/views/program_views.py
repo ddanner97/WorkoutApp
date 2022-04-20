@@ -26,7 +26,7 @@ def getPrograms(request, user_pk):
 
     return Response(serializer.data)
 
-# Get single products
+# Get single program
 @api_view(['GET'])
 def getProgram(request, program_pk):
     program = Program.objects.get(id=program_pk)
@@ -45,7 +45,7 @@ def createProgram(request):
 
     program = Program.objects.create(
         user = user,
-        name = 'Empty Name'
+        name = ''
     )
 
     serializer = ProgramSerializer(program, many=False)
@@ -55,8 +55,10 @@ def createProgram(request):
 def updateProgram(request, program_pk):
     data = request.data
     program = Program.objects.get(id=program_pk)
+
+    print(data)
     
-    program.name = data['name']
+    program.name = data["programName"]
 
     program.save()
 

@@ -14,7 +14,12 @@ import {
     PROGRAM_CREATE_REQUEST,
     PROGRAM_CREATE_SUCCESS,
     PROGRAM_CREATE_FAIL,
-    PROGRAM_CREATE_RESET,         
+    PROGRAM_CREATE_RESET, 
+    
+    PROGRAM_UPDATE_REQUEST,
+    PROGRAM_UPDATE_SUCCESS,
+    PROGRAM_UPDATE_FAIL,
+    PROGRAM_UPDATE_RESET,
     
     PROGRAM_ROUTINES_REQUEST, 
     PROGRAM_ROUTINES_SUCCESS, 
@@ -90,6 +95,25 @@ export const programCreateReducer = (state = {}, action) => {
 
         case PROGRAM_CREATE_RESET:
             return { }
+
+        default:
+            return state
+    }
+}
+
+export const programUpdateReducer = (state = {}, action) => {
+    switch(action.type){
+        case PROGRAM_UPDATE_REQUEST:
+            return { loading: true }
+
+        case PROGRAM_UPDATE_SUCCESS:
+            return { loading: false, success: true, program: action.payload }
+        
+        case PROGRAM_UPDATE_FAIL:
+            return { loading: false, error: action.payload }
+
+        case PROGRAM_UPDATE_RESET:
+            return { program: {} }
 
         default:
             return state
