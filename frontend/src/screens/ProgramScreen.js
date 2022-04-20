@@ -5,7 +5,7 @@ import store from '../redux/store';
 
 //Redux Imports
 import { useDispatch, useSelector } from 'react-redux';
-import { listProgramRoutines } from '../redux/actions/programActions'
+import { listProgramDetails, listProgramRoutines } from '../redux/actions/programActions'
 
 //Import Components
 import SearchBar from '../components/SearchBar'
@@ -28,27 +28,25 @@ function ProgramScreen() {
     const programRoutines = useSelector(state => state.programRoutines)
     const { error, loading, routines } = programRoutines
 
+    const programDetails = useSelector(state => state.programDetails)
+    const { detailError, detailLoading, program } = programDetails
+
     useEffect(() => {
 
+        dispatch(listProgramDetails(program_id))
         dispatch(listProgramRoutines(userId, program_id))
 
-    }, [dispatch])
-
-    // Get Program Name for display *Has to be a better way to do this such as passing in prop*
-    let programName = ''
-
-    for (let i = 0; i < state.programList.programs.length; i++){
-
-        if (id == state.programList.programs[i].id) {
-            programName = state.programList.programs[i].name
-        }
-    }
+    }, [dispatch, program_id])
 
     return (
         <div className="screen-container">
             <Header/>
 
-            <h1>{programName}</h1>
+            { detailLoading ? <Loader/>
+                : detailError ? <ErrorMessage>{detailError}</ErrorMessage>
+                    :
+                    <h1>{program.name}</h1>
+            }
 
             <SearchBar/>
 

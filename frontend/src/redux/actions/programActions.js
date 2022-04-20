@@ -15,6 +15,10 @@ import {
     PROGRAM_CREATE_REQUEST,
     PROGRAM_CREATE_SUCCESS,
     PROGRAM_CREATE_FAIL,
+
+    PROGRAM_UPDATE_REQUEST,
+    PROGRAM_UPDATE_SUCCESS,
+    PROGRAM_UPDATE_FAIL,
     
     PROGRAM_ROUTINES_REQUEST, 
     PROGRAM_ROUTINES_SUCCESS, 
@@ -50,29 +54,26 @@ export const listPrograms = (userId) => async (dispatch) => {
     }
 }
 
-/* ACTION CREATOR USED IN ProductScreen COMPONENT */
-// export const listProgramDetails = (id) => async (dispatch) => {
-//     try {
-//       dispatch({
-//         type: PROGRAM_DETAILS_REQUEST,
-//       });
-  
-//       const { data } = await axios.get(`/api/products/${id}`);
-  
-//       dispatch({
-//         type: PROGRAM_DETAILS_SUCCESS,
-//         payload: data,
-//       });
-//     } catch (error) {
-//       dispatch({
-//         type: PROGRAM_DETAILS_FAIL,
-//         payload:
-//           error.response && error.response.data.detail
-//             ? error.response.data.detail
-//             : error.message,
-//       });
-//     }
-//   };
+export const listProgramDetails = (id) => async (dispatch) => {
+    try{
+        dispatch({ type: PROGRAM_DETAILS_REQUEST})
+
+        const { data } =  await axios.get(`/api/programs/program/${id}`)
+
+        dispatch({
+            type: PROGRAM_DETAILS_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: PROGRAM_DETAILS_FAIL,
+            payload: error.response && error.response.data.detail
+            ? error.response.data.detail 
+            : error.message
+        })
+    }
+}
 
 export const deleteProgram = (program_id) => async (dispatch, getState) => {
     try{
@@ -139,6 +140,50 @@ export const createProgram = () => async (dispatch, getState) => {
     } catch (error) {
         dispatch({
             type: PROGRAM_CREATE_FAIL,
+            payload: error.response && error.response.data.detail
+            ? error.response.data.detail 
+            : error.message
+        })
+    }
+}
+
+export const updateProgram = (program) => async (dispatch, getState) => {
+    try{
+        dispatch({ type: PROGRAM_UPDATE_REQUEST})
+
+        const {
+            userLogin: { userInfo },
+        } = getState()
+
+        // Pulling out the current user we are logged in as 
+        const config = {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
+
+        // Make API call to create product
+        const { data } =  await axios.put(
+            `/api/programs/program-update/${program.id}/`,
+            program,
+            config
+        )
+
+        dispatch({
+            type: PROGRAM_UPDATE_SUCCESS,
+            payload: data,
+        })
+
+        //Load in updated product into details 
+        dispatch({
+            type: PROGRAM_DETAILS_SUCCESS, 
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: PROGRAM_UPDATE_FAIL,
             payload: error.response && error.response.data.detail
             ? error.response.data.detail 
             : error.message
