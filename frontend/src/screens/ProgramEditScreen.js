@@ -24,9 +24,6 @@ function ProgramEditScreen({ }) {
     const { id } = useParams()
     const program_id = id
 
-    // GET id from new program
-    console.log(program_id)
-
     // STATE variables
     const [programName, setProgramName] = useState("")
 
@@ -50,7 +47,7 @@ function ProgramEditScreen({ }) {
 
         } else {
 
-            if (!program.name || program.id !== Number(program_id)) {
+            if (program.id !== Number(program_id)) {
                 dispatch(listProgramDetails(program_id));
             } else {
                 setProgramName(program.name);
