@@ -75,12 +75,15 @@ def getRoutines(request, user_pk, program_pk):
     return Response(serializer.data)
 
 @api_view(['POST'])
-def createRoutine(request):
+def createRoutine(request, program_pk):
     user = request.user
+    print(user)
+
+    program = Program.objects.get(id=program_pk)
 
     routine = Routine.objects.create(
-        name = 'Upper Body day',
-        program = 'Body Building Split',
+        name = 'Push Day 2',
+        program = program,
     )
 
     serializer = RoutineSerializer(routine, many=False)
@@ -102,6 +105,33 @@ def getExercises(request, program_pk, routine_pk):
 
     return Response(serializer.data)
 
+@api_view(['POST'])
+def createExercise(request):
+
+    exercise = Exercise.objects.create(
+        user = user,
+        name = 'Bench Press'
+    )
+
+    serializer = ExerciseSerializer(exercise, many=False)
+    return Response(serializer.data)
+
+# EXERCISE ROUTINES BRIDGE
+@api_view(['POST'])
+def createExerciseRoutine(request, routine_pk, exercise_pk):
+    user = request.user
+
+    routine = Routine.objects.get(id=routine_pk)
+    exercise = Exercise.objects.get(id=exercise_pk)
+
+    exerciseRoutine = ExerciseRoutine.objects.create(
+        routine = routine,
+        exercise = exercise
+    )
+
+    serializer = ExerciseRoutineSerializer(exerciseRoutine, many=False)
+    return Response(serializer.data)
+
 #WORKOUT PARAMETERS VIEW
 @api_view(['GET'])
 def getWorkoutParams(request, routine_pk, exercise_pk):
@@ -120,4 +150,19 @@ def getWorkoutParams(request, routine_pk, exercise_pk):
 
     serializer = WorkoutParameterSerializer(exercise, many=True)
 
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def createWorkoutParams(request, exercise_routine_pk):
+
+    exerciseRoutine = ExerciseRoutine.objects.get(id=exercise_routine_pk)
+
+    workoutParams = WorkoutParameter.objects.create(
+        bridge_id = exerciseRoutine,
+        sets = 5,
+        reps = 5,
+        weight = 225
+    )
+
+    serializer = WorkoutParameterSerializer(workoutParams, many=False)
     return Response(serializer.data)
