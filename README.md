@@ -1,3 +1,3 @@
 # WorkoutApp
 ## Home Page
-<img src="images/Home Page.png" height="75">
+<img src="images/Home Page.png" height="75%">
