@@ -1,3 +1,3 @@
 # WorkoutApp
 Home Page
-![](images/Home Page.png)
+<img src="images/Home Page.png" >
