@@ -34,7 +34,7 @@ class ExerciseRoutine(models.Model):
     exercise = models.ForeignKey(Exercise, on_delete=CASCADE, null=False)
 
     def __str__(self):
-        return str(self.routine) + ' - ' + str(self.exercise)
+        return str(self.routine) + ' - ' + str(self.exercise) + ' - ' + str(self.id)
 
 class WorkoutParameter(models.Model):
     bridge_id = models.ForeignKey(ExerciseRoutine, on_delete=CASCADE, null=False)
