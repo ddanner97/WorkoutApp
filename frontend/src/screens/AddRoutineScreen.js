@@ -36,16 +36,9 @@ function AddRoutineScreen() {
     const saveWorkout = async (e) => {
         e.preventDefault()
 
-        const userInfo = state.userLogin.userInfo
+        
 
-        // const config = {
-        //     headers: {
-        //         'Content-type': 'application/json',
-        //         Authorization: `Bearer ${userInfo.token}`
-        //     }
-        // }
-
-        console.log(program, routineName, exerciseList, userInfo.token)
+        console.log(program, routineName, exerciseList)
         
     }
 
