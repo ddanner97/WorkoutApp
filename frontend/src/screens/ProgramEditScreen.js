@@ -72,7 +72,7 @@ function ProgramEditScreen({ }) {
             programName,
           })
         );
-      };
+    };
 
     return (
         <div>

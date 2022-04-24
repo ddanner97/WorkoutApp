@@ -1,4 +1,5 @@
 import { 
+    // PROGRAMS
     PROGRAM_LIST_REQUEST, 
     PROGRAM_LIST_SUCCESS, 
     PROGRAM_LIST_FAIL,
@@ -21,19 +22,28 @@ import {
     PROGRAM_UPDATE_FAIL,
     PROGRAM_UPDATE_RESET,
     
-    PROGRAM_ROUTINES_REQUEST, 
-    PROGRAM_ROUTINES_SUCCESS, 
+    // ROUTINES
+    PROGRAM_ROUTINES_REQUEST,
+    PROGRAM_ROUTINES_SUCCESS,
     PROGRAM_ROUTINES_FAIL,
 
+    ROUTINE_CREATE_SUCCESS,
+    ROUTINE_CREATE_FAIL,
+    ROUTINE_CREATE_REQUEST,
+    ROUTINE_CREATE_RESET,
+
+    // EXERCISES
     ROUTINE_EXERCISES_SUCCESS,
     ROUTINE_EXERCISES_FAIL,
     ROUTINE_EXERCISES_REQUEST,
 
+    // PARAMETERS
     EXERCISE_PARAM_SUCCESS,
     EXERCISE_PARAM_FAIL,
     EXERCISE_PARAM_REQUEST,
 } from '../constants/programConstants';
 
+// PROGRAMS
 export const programListReducer = (state = { programs: []}, action) => {
     switch(action.type){
         case PROGRAM_LIST_REQUEST:
@@ -120,6 +130,7 @@ export const programUpdateReducer = (state = {}, action) => {
     }
 }
 
+// ROUTINES
 export const programRoutinesReducer = (state = { routines: [] }, action) => {
     switch(action.type){
         case PROGRAM_ROUTINES_REQUEST:
@@ -136,6 +147,26 @@ export const programRoutinesReducer = (state = { routines: [] }, action) => {
     }
 }
 
+export const routineCreateReducer = (state = {}, action) => {
+    switch(action.type){
+        case ROUTINE_CREATE_REQUEST:
+            return { loading: true }
+
+        case ROUTINE_CREATE_SUCCESS:
+            return { loading: false, success: true, routine: action.payload }
+        
+        case ROUTINE_CREATE_FAIL:
+            return { loading: false, error: action.payload }
+
+        case ROUTINE_CREATE_RESET:
+            return { }
+
+        default:
+            return state
+    }
+}
+
+// EXERCISES
 export const routineExerciseReducer = (state = { exercises: [] }, action) => {
     switch(action.type){
         case ROUTINE_EXERCISES_REQUEST:
@@ -152,6 +183,7 @@ export const routineExerciseReducer = (state = { exercises: [] }, action) => {
     }
 }
 
+// PARAMETERS
 export const exerciseParamReducer = (state = { parameters: [] }, action) => {
     switch(action.type){
         case EXERCISE_PARAM_REQUEST:

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { 
+    // PROGRAMS
     PROGRAM_LIST_REQUEST, 
     PROGRAM_LIST_SUCCESS, 
     PROGRAM_LIST_FAIL,
@@ -15,24 +16,32 @@ import {
     PROGRAM_CREATE_REQUEST,
     PROGRAM_CREATE_SUCCESS,
     PROGRAM_CREATE_FAIL,
-
+    
     PROGRAM_UPDATE_REQUEST,
     PROGRAM_UPDATE_SUCCESS,
     PROGRAM_UPDATE_FAIL,
     
-    PROGRAM_ROUTINES_REQUEST, 
-    PROGRAM_ROUTINES_SUCCESS, 
+    // ROUTINES
+    PROGRAM_ROUTINES_REQUEST,
+    PROGRAM_ROUTINES_SUCCESS,
     PROGRAM_ROUTINES_FAIL,
 
+    ROUTINE_CREATE_SUCCESS,
+    ROUTINE_CREATE_FAIL,
+    ROUTINE_CREATE_REQUEST,
+
+    // EXERCISES
     ROUTINE_EXERCISES_SUCCESS,
     ROUTINE_EXERCISES_FAIL,
     ROUTINE_EXERCISES_REQUEST,
 
+    // PARAMETERS
     EXERCISE_PARAM_SUCCESS,
     EXERCISE_PARAM_FAIL,
     EXERCISE_PARAM_REQUEST,
 } from '../constants/programConstants';
 
+// PROGRAMS
 export const listPrograms = (userId) => async (dispatch) => {
     try{
         dispatch({ type: PROGRAM_LIST_REQUEST})
@@ -191,6 +200,7 @@ export const updateProgram = (program) => async (dispatch, getState) => {
     }
 }
 
+// ROUTINES
 export const listProgramRoutines = (userId, program_id) => async (dispatch) => {
     try{
         dispatch({ type: PROGRAM_ROUTINES_REQUEST})
@@ -212,6 +222,45 @@ export const listProgramRoutines = (userId, program_id) => async (dispatch) => {
     }
 }
 
+export const createRoutine = (routine) => async (dispatch, getState) => {
+    try{
+        dispatch({ type: ROUTINE_CREATE_REQUEST})
+
+        const {
+            userLogin: { userInfo },
+        } = getState()
+
+        // Pulling out the current user we are logged in as 
+        const config = {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
+
+        // Make API call to create product
+        const { data } =  await axios.post(
+            `api/programs/routine-create/${routine.program_id}/`,
+            {},
+            config
+        )
+
+        dispatch({
+            type: ROUTINE_CREATE_SUCCESS,
+            payload: data,
+        })
+
+    } catch (error) {
+        dispatch({
+            type: ROUTINE_CREATE_FAIL,
+            payload: error.response && error.response.data.detail
+            ? error.response.data.detail 
+            : error.message
+        })
+    }
+}
+
+// EXERCICES
 export const listRoutineExercises = (program_id, routine_id) => async (dispatch) => {
     try{
         dispatch({ type: ROUTINE_EXERCISES_REQUEST})
@@ -233,6 +282,7 @@ export const listRoutineExercises = (program_id, routine_id) => async (dispatch)
     }
 }
 
+// PARAMETERS
 export const listExerciseParams = (routine_id, exerciseIdList) => async (dispatch) => {
     try{
         dispatch({ type: EXERCISE_PARAM_REQUEST})

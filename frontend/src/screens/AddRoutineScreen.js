@@ -1,23 +1,33 @@
 import React, { useState, useEffect } from 'react'
 import { nanoid } from "nanoid";
 
+/* REACT ROUTER */
+import { Link, useParams, useNavigate, } from 'react-router-dom';
+
 //Redux Imports
 import { useDispatch, useSelector } from 'react-redux';
 import store from '../redux/store';
+
+/* ACTION CREATORS */
+import { createRoutine } from "../redux/actions/programActions";
+
+/* ACTION TYPES */
+import { ROUTINE_CREATE_RESET } from '../redux/constants/programConstants';
 
 //Import Components
 import Loader from '../components/Loader';
 import ErrorMessage from '../components/ErrorMessage';
 import Header from '../components/Header';
 import ExerciseParam from '../components/ExerciseParam'
-import axios from 'axios';
 
 function AddRoutineScreen() {
+    const history = useNavigate();
+
     const state = {...store.getState()}
 
     //VARIABLES All useState()
     //Using state to keep track of what the selected program option is
-    const [program, setProgram] = useState("")
+    const [program_id, setProgram] = useState("")
     const [newProgram, setNewProgram] = useState("")
     const [routineName, setRoutineName] = useState("")
 
@@ -30,19 +40,50 @@ function AddRoutineScreen() {
 
     // Array of programs {value -> id} {text -> name}
     let programOptions = useSelector(state => state.programList.programs)
+
+    // REDUX FUNCTIONS & VARIABLES
+    const dispatch = useDispatch();
+
+    // routine create
+    const routineCreate = useSelector(state => state.routineCreate)
+    const { error: errorCreate, loading: loadingCreate, success: successCreate, program: createdRoutine } = routineCreate
+
+    useEffect(() => {
+        dispatch({ type: ROUTINE_CREATE_RESET })
+
+        if(successCreate) {
+
+            // console.log(createdProgram);
+            const redirect = `/`
+            history(redirect)
+
+        }
+
+    }, [dispatch, successCreate, createRoutine])
     
     // FUNCTIONS
-    // Submit handler to save workout
+    // Submit handler to SAVE WORKOUT
     const saveWorkout = async (e) => {
         e.preventDefault()
 
-        
+        if (routineName == ""){
+            alert("Routine name must be filled out")
+            return false
+        }
+    
+        // Create Routine -> Send data to action
+        dispatch(
+          createRoutine({
+            program_id,
+            routineName,
+          })
+        );
 
-        console.log(program, routineName, exerciseList)
+        console.log(program_id, routineName, exerciseList)
         
     }
 
-    // Submit Handler to save exercises [uses setExerciseList hook to update list of exercises]
+    // Submit Handler to SAVE EXERCISES [uses setExerciseList hook to update list of exercises]
     const addExercise = (e) => {
         e.preventDefault()
 
