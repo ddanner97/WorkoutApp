@@ -49,7 +49,6 @@ function AddRoutineScreen() {
     const { error: errorCreate, loading: loadingCreate, success: successCreate, program: createdRoutine } = routineCreate
 
     useEffect(() => {
-        dispatch({ type: ROUTINE_CREATE_RESET })
 
         if(successCreate) {
 
@@ -58,6 +57,9 @@ function AddRoutineScreen() {
             history(redirect)
 
         }
+
+        // Reset 
+        dispatch({ type: ROUTINE_CREATE_RESET })
 
     }, [dispatch, successCreate, createRoutine])
     

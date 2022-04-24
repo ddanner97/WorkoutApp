@@ -241,7 +241,7 @@ export const createRoutine = (routine) => async (dispatch, getState) => {
         // Make API call to create product
         const { data } =  await axios.post(
             `api/programs/routine-create/${routine.program_id}/`,
-            {},
+            routine,
             config
         )
 
