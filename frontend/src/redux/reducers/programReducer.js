@@ -37,6 +37,17 @@ import {
     ROUTINE_EXERCISES_FAIL,
     ROUTINE_EXERCISES_REQUEST,
 
+    EXERCISE_CREATE_SUCCESS,
+    EXERCISE_CREATE_FAIL,
+    EXERCISE_CREATE_REQUEST,
+    EXERCISE_CREATE_RESET,
+
+    // EXERCISE ROUTINES
+    EXERCISE_ROUTINE_CREATE_SUCCESS,
+    EXERCISE_ROUTINE_CREATE_FAIL,
+    EXERCISE_ROUTINE_CREATE_REQUEST,
+    EXERCISE_ROUTINE_CREATE_RESET,
+
     // PARAMETERS
     EXERCISE_PARAM_SUCCESS,
     EXERCISE_PARAM_FAIL,
@@ -177,6 +188,45 @@ export const routineExerciseReducer = (state = { exercises: [] }, action) => {
         
         case ROUTINE_EXERCISES_FAIL:
             return { loading: false, error: action.payload }
+
+        default:
+            return state
+    }
+}
+
+export const exerciseCreateReducer = (state = {}, action) => {
+    switch(action.type){
+        case EXERCISE_CREATE_REQUEST:
+            return { loading: true }
+
+        case EXERCISE_CREATE_SUCCESS:
+            return { loading: false, success: true, exercise: action.payload }
+        
+        case EXERCISE_CREATE_FAIL:
+            return { loading: false, error: action.payload }
+
+        case EXERCISE_CREATE_RESET:
+            return { }
+
+        default:
+            return state
+    }
+}
+
+// EXERCISE ROUTINES
+export const exerciseRoutineCreateReducer = (state = {}, action) => {
+    switch(action.type){
+        case ROUTINE_CREATE_REQUEST:
+            return { loading: true }
+
+        case ROUTINE_CREATE_SUCCESS:
+            return { loading: false, success: true, exerciseRoutine: action.payload }
+        
+        case ROUTINE_CREATE_FAIL:
+            return { loading: false, error: action.payload }
+
+        case ROUTINE_CREATE_RESET:
+            return { }
 
         default:
             return state

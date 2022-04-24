@@ -77,8 +77,6 @@ def createRoutine(request, program_pk):
     user = request.user
     data = request.data
 
-    print(data)
-
     program = Program.objects.get(id=program_pk)
 
     routine = Routine.objects.create(
@@ -107,10 +105,14 @@ def getExercises(request, program_pk, routine_pk):
 
 @api_view(['POST'])
 def createExercise(request):
+    user = request.user
+    data = request.data
+
+    print(data)
 
     exercise = Exercise.objects.create(
         user = user,
-        name = 'Bench Press'
+        name = data["exerciseName"]
     )
 
     serializer = ExerciseSerializer(exercise, many=False)

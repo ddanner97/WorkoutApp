@@ -35,6 +35,15 @@ import {
     ROUTINE_EXERCISES_FAIL,
     ROUTINE_EXERCISES_REQUEST,
 
+    EXERCISE_CREATE_SUCCESS,
+    EXERCISE_CREATE_FAIL,
+    EXERCISE_CREATE_REQUEST,
+
+    // EXERCISE ROUTINE BRIDGE
+    EXERCISE_ROUTINE_CREATE_SUCCESS,
+    EXERCISE_ROUTINE_CREATE_FAIL,
+    EXERCISE_ROUTINE_CREATE_REQUEST,
+
     // PARAMETERS
     EXERCISE_PARAM_SUCCESS,
     EXERCISE_PARAM_FAIL,
@@ -260,7 +269,7 @@ export const createRoutine = (routine) => async (dispatch, getState) => {
     }
 }
 
-// EXERCICES
+// EXERCISES
 export const listRoutineExercises = (program_id, routine_id) => async (dispatch) => {
     try{
         dispatch({ type: ROUTINE_EXERCISES_REQUEST})
@@ -276,6 +285,83 @@ export const listRoutineExercises = (program_id, routine_id) => async (dispatch)
         dispatch({
             type: ROUTINE_EXERCISES_FAIL,
             payload: error.response && error.response.data.detail 
+            ? error.response.data.detail 
+            : error.message
+        })
+    }
+}
+
+export const createExercise = (exercise) => async (dispatch, getState) => {
+    try{
+        dispatch({ type: EXERCISE_CREATE_REQUEST})
+
+        const {
+            userLogin: { userInfo },
+        } = getState()
+
+        // Pulling out the current user we are logged in as 
+        const config = {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
+
+        // Make API call to create product
+        const { data } =  await axios.post(
+            `/api/programs/exercise-create/`,
+            exercise,
+            config
+        )
+
+        dispatch({
+            type: EXERCISE_CREATE_SUCCESS,
+            payload: data,
+        })
+
+    } catch (error) {
+        dispatch({
+            type: EXERCISE_CREATE_FAIL,
+            payload: error.response && error.response.data.detail
+            ? error.response.data.detail 
+            : error.message
+        })
+    }
+}
+
+// EXERCISE ROUTINE BRIDGE
+export const createExerciseRoutine = (exerciseRoutine) => async (dispatch, getState) => {
+    try{
+        dispatch({ type: EXERCISE_ROUTINE_CREATE_REQUEST})
+
+        const {
+            userLogin: { userInfo },
+        } = getState()
+
+        // Pulling out the current user we are logged in as 
+        const config = {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
+
+        // Make API call to create product
+        const { data } =  await axios.post(
+            `/api/programs/exercise-routine-create/routine/<str:routine_pk>/exercise/<str:exercise_pk>/`,
+            exerciseRoutine,
+            config
+        )
+
+        dispatch({
+            type: EXERCISE_ROUTINE_CREATE_SUCCESS,
+            payload: data,
+        })
+
+    } catch (error) {
+        dispatch({
+            type: EXERCISE_ROUTINE_CREATE_FAIL,
+            payload: error.response && error.response.data.detail
             ? error.response.data.detail 
             : error.message
         })

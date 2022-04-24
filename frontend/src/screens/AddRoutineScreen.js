@@ -9,10 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import store from '../redux/store';
 
 /* ACTION CREATORS */
-import { createRoutine } from "../redux/actions/programActions";
+import { createRoutine, createExercise } from "../redux/actions/programActions";
 
 /* ACTION TYPES */
-import { ROUTINE_CREATE_RESET } from '../redux/constants/programConstants';
+import { ROUTINE_CREATE_RESET, EXERCISE_CREATE_RESET } from '../redux/constants/programConstants';
 
 //Import Components
 import Loader from '../components/Loader';
@@ -46,22 +46,35 @@ function AddRoutineScreen() {
 
     // routine create
     const routineCreate = useSelector(state => state.routineCreate)
-    const { error: errorCreate, loading: loadingCreate, success: successCreate, program: createdRoutine } = routineCreate
+    const { error: errorRoutineCreate, loading: loadingRoutineCreate, success: successRoutineCreate, program: createdRoutine } = routineCreate
+
+    // exercise create
+    const exerciseCreate = useSelector(state => state.exerciseCreate)
+    const { error: errorExerciseCreate, loading: loadingExerciseCreate, success: successExerciseCreate, program: createdExercise } = exerciseCreate
 
     useEffect(() => {
 
-        if(successCreate) {
+        if(successRoutineCreate) {
+            for (let i = 0; i < exerciseList.length; i++){
+                // dispatch create exercise
+                let exerciseName = exerciseList[i].exerciseName
+                dispatch(createExercise({
+                    exerciseName
+                }))
+
+                // dispatch create exercise routine bridge
+                
+            }
 
             // console.log(createdProgram);
             const redirect = `/`
             history(redirect)
-
         }
 
         // Reset 
-        dispatch({ type: ROUTINE_CREATE_RESET })
+        // dispatch({ type: ROUTINE_CREATE_RESET })
 
-    }, [dispatch, successCreate, createRoutine])
+    }, [dispatch, successRoutineCreate, createRoutine])
     
     // FUNCTIONS
     // Submit handler to SAVE WORKOUT
