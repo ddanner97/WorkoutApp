@@ -55,8 +55,6 @@ def createProgram(request):
 def updateProgram(request, program_pk):
     data = request.data
     program = Program.objects.get(id=program_pk)
-
-    print(data)
     
     program.name = data["programName"]
 
@@ -77,12 +75,12 @@ def getRoutines(request, user_pk, program_pk):
 @api_view(['POST'])
 def createRoutine(request, program_pk):
     user = request.user
-    print(user)
+    data = request.data
 
     program = Program.objects.get(id=program_pk)
 
     routine = Routine.objects.create(
-        name = 'Push Day 2',
+        name = data["routineName"],
         program = program,
     )
 
@@ -107,10 +105,14 @@ def getExercises(request, program_pk, routine_pk):
 
 @api_view(['POST'])
 def createExercise(request):
+    user = request.user
+    data = request.data
+
+    print(data)
 
     exercise = Exercise.objects.create(
         user = user,
-        name = 'Bench Press'
+        name = data["exerciseName"]
     )
 
     serializer = ExerciseSerializer(exercise, many=False)

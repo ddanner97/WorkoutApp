@@ -1,23 +1,33 @@
 import React, { useState, useEffect } from 'react'
 import { nanoid } from "nanoid";
 
+/* REACT ROUTER */
+import { Link, useParams, useNavigate, } from 'react-router-dom';
+
 //Redux Imports
 import { useDispatch, useSelector } from 'react-redux';
 import store from '../redux/store';
+
+/* ACTION CREATORS */
+import { createRoutine, createExercise, createExerciseRoutine } from "../redux/actions/programActions";
+
+/* ACTION TYPES */
+import { ROUTINE_CREATE_RESET, EXERCISE_CREATE_RESET, EXERCISE_ROUTINE_CREATE_RESET } from '../redux/constants/programConstants';
 
 //Import Components
 import Loader from '../components/Loader';
 import ErrorMessage from '../components/ErrorMessage';
 import Header from '../components/Header';
 import ExerciseParam from '../components/ExerciseParam'
-import axios from 'axios';
 
 function AddRoutineScreen() {
+    const history = useNavigate();
+
     const state = {...store.getState()}
 
     //VARIABLES All useState()
     //Using state to keep track of what the selected program option is
-    const [program, setProgram] = useState("")
+    const [program_id, setProgram] = useState("")
     const [newProgram, setNewProgram] = useState("")
     const [routineName, setRoutineName] = useState("")
 
@@ -30,26 +40,79 @@ function AddRoutineScreen() {
 
     // Array of programs {value -> id} {text -> name}
     let programOptions = useSelector(state => state.programList.programs)
+
+    // REDUX FUNCTIONS & VARIABLES
+    const dispatch = useDispatch();
+
+    // routine create
+    const routineCreate = useSelector(state => state.routineCreate)
+    const { error: errorRoutineCreate, loading: loadingRoutineCreate, success: successRoutineCreate } = routineCreate
+
+    // exercise create
+    const exerciseCreate = useSelector(state => state.exerciseCreate)
+    const { error: errorExerciseCreate, loading: loadingExerciseCreate, success: successExerciseCreate } = exerciseCreate
+
+    // exercise routine create
+    const exerciseRoutineCreate = useSelector(state => state.exerciseRoutineCreate)
+    const { error: errorExerciseRoutineCreate, loading: loadingExerciseRoutineCreate, success: successExerciseRoutineCreate } = exerciseRoutineCreate
+
+    useEffect(() => {
+
+        if(successRoutineCreate) {
+            for (let i = 0; i < exerciseList.length; i++){
+                
+                // dispatch create exercise using async function
+                let exerciseName = exerciseList[i].exerciseName
+
+                dispatch(createExercise({
+                    exerciseName
+                }))
+
+            }
+
+            const redirect = `/`
+            history(redirect)
+        }
+
+        // if (successExerciseCreate) {
+        //     let routine_pk = routineCreate.routine
+        //     let exercise_pk = exerciseCreate.exercise
+
+        //     console.log(routine_pk)
+        //     console.log(exercise_pk)
+        //     // dispatch create exercise routine bridge
+        //     // dispatch(createExerciseRoutine({
+        //     //    routine_pk,
+        //     //    exercise_pk,
+        //     // }))
+        // } 
+
+        // Reset 
+        // dispatch({ type: ROUTINE_CREATE_RESET })
+
+    }, [dispatch, successRoutineCreate, createRoutine, successExerciseCreate, createExercise])
     
     // FUNCTIONS
-    // Submit handler to save workout
+    // Submit handler to SAVE WORKOUT
     const saveWorkout = async (e) => {
         e.preventDefault()
 
-        const userInfo = state.userLogin.userInfo
-
-        // const config = {
-        //     headers: {
-        //         'Content-type': 'application/json',
-        //         Authorization: `Bearer ${userInfo.token}`
-        //     }
-        // }
-
-        console.log(program, routineName, exerciseList, userInfo.token)
+        if (routineName == ""){
+            alert("Routine name must be filled out")
+            return false
+        }
+    
+        // Create Routine -> Send data to action
+        dispatch(
+          createRoutine({
+            program_id,
+            routineName,
+          })
+        );
         
     }
 
-    // Submit Handler to save exercises [uses setExerciseList hook to update list of exercises]
+    // Submit Handler to SAVE EXERCISES [uses setExerciseList hook to update list of exercises]
     const addExercise = (e) => {
         e.preventDefault()
 

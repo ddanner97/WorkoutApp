@@ -6,9 +6,15 @@ import {
     programDeleteReducer,
     programCreateReducer,
     programUpdateReducer,
+
     programRoutinesReducer, 
+    routineCreateReducer,
+
     routineExerciseReducer, 
-    exerciseParamReducer, 
+    exerciseCreateReducer,
+
+    exerciseParamReducer,
+    exerciseRoutineCreateReducer, 
 } from './reducers/programReducer'
 
 import { 
@@ -24,8 +30,19 @@ const rootReducer = combineReducers({
     programDelete: programDeleteReducer,
     programCreate: programCreateReducer,
     programUpdate: programUpdateReducer,
+
+    // Routine Reducers
     programRoutines: programRoutinesReducer,
+    routineCreate: routineCreateReducer,
+
+    // Exercise Reducers
     routineExercises: routineExerciseReducer,
+    exerciseCreate: exerciseCreateReducer,
+
+    // Exercise Routines
+    exerciseRoutineCreate: exerciseRoutineCreateReducer,
+
+    // Param Reducers
     exerciseParameters: exerciseParamReducer,
 
     // User Reducers
