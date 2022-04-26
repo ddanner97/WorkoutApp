@@ -346,9 +346,11 @@ export const createExerciseRoutine = (exerciseRoutine) => async (dispatch, getSt
             },
         };
 
+        console.log(exerciseRoutine)
+
         // Make API call to create product
         const { data } =  await axios.post(
-            `/api/programs/exercise-routine-create/routine/<str:routine_pk>/exercise/<str:exercise_pk>/`,
+            `/api/programs/exercise-routine-create/routine/${exerciseRoutine.routine_pk}/exercise/${exerciseRoutine.exercise_pk}/`,
             exerciseRoutine,
             config
         )
@@ -377,7 +379,7 @@ export const listExerciseParams = (routine_id, exerciseIdList) => async (dispatc
         const exerciseParams2 = []
 
         for (let i = 0; i < exerciseIdList.length; i++){
-            exerciseParams.push(await axios.get(`/api/programs/routine/${routine_id}/exercise/${exerciseIdList[i]}`))
+            exerciseParams.push(await axios.get(`/api/programs/routine/${routine_id}/exercise/${exerciseIdList[i]}/`))
             const { data } = exerciseParams[i]
             exerciseParams2.push(data)
         }

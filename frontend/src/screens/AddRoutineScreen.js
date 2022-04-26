@@ -9,10 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import store from '../redux/store';
 
 /* ACTION CREATORS */
-import { createRoutine, createExercise } from "../redux/actions/programActions";
+import { createRoutine, createExercise, createExerciseRoutine } from "../redux/actions/programActions";
 
 /* ACTION TYPES */
-import { ROUTINE_CREATE_RESET, EXERCISE_CREATE_RESET } from '../redux/constants/programConstants';
+import { ROUTINE_CREATE_RESET, EXERCISE_CREATE_RESET, EXERCISE_ROUTINE_CREATE_RESET } from '../redux/constants/programConstants';
 
 //Import Components
 import Loader from '../components/Loader';
@@ -46,35 +46,51 @@ function AddRoutineScreen() {
 
     // routine create
     const routineCreate = useSelector(state => state.routineCreate)
-    const { error: errorRoutineCreate, loading: loadingRoutineCreate, success: successRoutineCreate, program: createdRoutine } = routineCreate
+    const { error: errorRoutineCreate, loading: loadingRoutineCreate, success: successRoutineCreate } = routineCreate
 
     // exercise create
     const exerciseCreate = useSelector(state => state.exerciseCreate)
-    const { error: errorExerciseCreate, loading: loadingExerciseCreate, success: successExerciseCreate, program: createdExercise } = exerciseCreate
+    const { error: errorExerciseCreate, loading: loadingExerciseCreate, success: successExerciseCreate } = exerciseCreate
+
+    // exercise routine create
+    const exerciseRoutineCreate = useSelector(state => state.exerciseRoutineCreate)
+    const { error: errorExerciseRoutineCreate, loading: loadingExerciseRoutineCreate, success: successExerciseRoutineCreate } = exerciseRoutineCreate
 
     useEffect(() => {
 
         if(successRoutineCreate) {
             for (let i = 0; i < exerciseList.length; i++){
-                // dispatch create exercise
+                
+                // dispatch create exercise using async function
                 let exerciseName = exerciseList[i].exerciseName
+
                 dispatch(createExercise({
                     exerciseName
                 }))
 
-                // dispatch create exercise routine bridge
-                
             }
 
-            // console.log(createdProgram);
             const redirect = `/`
             history(redirect)
         }
 
+        // if (successExerciseCreate) {
+        //     let routine_pk = routineCreate.routine
+        //     let exercise_pk = exerciseCreate.exercise
+
+        //     console.log(routine_pk)
+        //     console.log(exercise_pk)
+        //     // dispatch create exercise routine bridge
+        //     // dispatch(createExerciseRoutine({
+        //     //    routine_pk,
+        //     //    exercise_pk,
+        //     // }))
+        // } 
+
         // Reset 
         // dispatch({ type: ROUTINE_CREATE_RESET })
 
-    }, [dispatch, successRoutineCreate, createRoutine])
+    }, [dispatch, successRoutineCreate, createRoutine, successExerciseCreate, createExercise])
     
     // FUNCTIONS
     // Submit handler to SAVE WORKOUT
@@ -93,8 +109,6 @@ function AddRoutineScreen() {
             routineName,
           })
         );
-
-        console.log(program_id, routineName, exerciseList)
         
     }
 
