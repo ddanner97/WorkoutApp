@@ -13,8 +13,10 @@ import {
     routineExerciseReducer, 
     exerciseCreateReducer,
 
-    exerciseParamReducer,
     exerciseRoutineCreateReducer, 
+
+    exerciseParamReducer,
+    parameterCreateReducer,
 } from './reducers/programReducer'
 
 import { 
@@ -44,6 +46,7 @@ const rootReducer = combineReducers({
 
     // Param Reducers
     exerciseParameters: exerciseParamReducer,
+    parametersCreate: parameterCreateReducer,
 
     // User Reducers
     userLogin: userLoginReducer,

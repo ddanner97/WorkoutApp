@@ -9,10 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import store from '../redux/store';
 
 /* ACTION CREATORS */
-import { createRoutine, createExercise, createExerciseRoutine } from "../redux/actions/programActions";
+import { createRoutine, createExercise, createExerciseRoutine, createParam } from "../redux/actions/programActions";
 
 /* ACTION TYPES */
-import { ROUTINE_CREATE_RESET, EXERCISE_CREATE_RESET, EXERCISE_ROUTINE_CREATE_RESET } from '../redux/constants/programConstants';
+import { ROUTINE_CREATE_RESET, EXERCISE_CREATE_RESET, EXERCISE_ROUTINE_CREATE_RESET, EXERCISE_PARAM_CREATE_RESET } from '../redux/constants/programConstants';
 
 //Import Components
 import Loader from '../components/Loader';
@@ -32,7 +32,6 @@ function AddRoutineScreen() {
     const [routineName, setRoutineName] = useState("")
 
     // State variables for Exercise form
-    const [exerciseList, setExerciseList] = useState([])
     const [exercise, setExercise] = useState("")
     const [weight, setWeight] = useState("")
     const [sets, setSets] = useState("")
@@ -58,133 +57,144 @@ function AddRoutineScreen() {
 
     useEffect(() => {
 
-        if(successRoutineCreate) {
-            for (let i = 0; i < exerciseList.length; i++){
-                
-                // dispatch create exercise using async function
-                let exerciseName = exerciseList[i].exerciseName
+        if (successExerciseCreate) {
+            let routine_pk = routineCreate.routine.id
+            let exercise_pk = exerciseCreate.exercise.id
 
-                dispatch(createExercise({
-                    exerciseName
-                }))
+            // dispatch create exercise routine bridge
+            dispatch(createExerciseRoutine({
+               routine_pk,
+               exercise_pk,
+            }))
 
-            }
+            dispatch({ type: EXERCISE_CREATE_RESET })            
+        } 
 
-            const redirect = `/`
-            history(redirect)
+        if (successExerciseRoutineCreate) {
+            //set all parameters = to matching exercise parameters
+            console.log(exerciseRoutineCreate.exerciseRoutine.id)
+
+            //dispatch create workout params
+            dispatch(createParam({
+                bridge_id: exerciseRoutineCreate.exerciseRoutine.id,
+                sets,
+                reps,
+                weight,
+            }))
+
+            // Clear input fields after submitting
+            setExercise("")
+            setWeight("")
+            setSets("")
+            setReps("")
+
+            // reset
+            dispatch({ type: EXERCISE_ROUTINE_CREATE_RESET })
         }
 
-        // if (successExerciseCreate) {
-        //     let routine_pk = routineCreate.routine
-        //     let exercise_pk = exerciseCreate.exercise
-
-        //     console.log(routine_pk)
-        //     console.log(exercise_pk)
-        //     // dispatch create exercise routine bridge
-        //     // dispatch(createExerciseRoutine({
-        //     //    routine_pk,
-        //     //    exercise_pk,
-        //     // }))
-        // } 
-
-        // Reset 
-        // dispatch({ type: ROUTINE_CREATE_RESET })
-
-    }, [dispatch, successRoutineCreate, createRoutine, successExerciseCreate, createExercise])
+    }, [createExercise, successExerciseCreate, createExerciseRoutine, successExerciseRoutineCreate])
     
     // FUNCTIONS
     // Submit handler to SAVE WORKOUT
     const saveWorkout = async (e) => {
         e.preventDefault()
 
+        // Reset all create state and send home
+        dispatch({ type: ROUTINE_CREATE_RESET })
+
+        const redirect = `/`
+        history(redirect)
+        
+    }
+
+    // submit handler to ADD ROUTINE 
+    const addRoutine = (e) => {
+        e.preventDefault()
+
+        if (program_id == ""){
+            alert("Must select a program")
+            return false
+        }
+
         if (routineName == ""){
             alert("Routine name must be filled out")
             return false
         }
-    
+
         // Create Routine -> Send data to action
         dispatch(
-          createRoutine({
-            program_id,
-            routineName,
-          })
+            createRoutine({
+              program_id,
+              routineName,
+            })
         );
-        
     }
 
     // Submit Handler to SAVE EXERCISES [uses setExerciseList hook to update list of exercises]
     const addExercise = (e) => {
         e.preventDefault()
 
-        // Create object
-        const newExercise = {
-            exerciseName: exercise, 
-            weight: weight, 
-            sets: sets, 
-            reps: reps, 
-            id: "exercise-" + nanoid()}
+        if (Object.keys(routineCreate).length === 0){
+            alert("Must add routine")
+            return false
+        }
 
-        // Clear input fields after submitting
-        setExercise("")
-        setWeight("")
-        setSets("")
-        setReps("")
+        if (exercise == ""){
+            alert("Must enter exercise name")
+            return false
+        }
 
-        // Use spread operator to copy existing array, and we add our object newExercise 
-        // PAssing both into setExerciseList() to update the state
-        setExerciseList([...exerciseList, newExercise])
+        if (weight == ""){
+            alert("Must enter weight")
+            return false
+        }
+
+        if (sets == ""){
+            alert("Must enter sets")
+            return false
+        }
+
+        if (reps == ""){
+            alert("Must enter reps")
+            return false
+        }
+
+        dispatch(createExercise({
+            exerciseName: exercise
+        }))
     }
-
-    // Delete 
-    function deleteExercise(id) {
-        //Filter out object with matching id and create new array without object
-        const remainingExercises = exerciseList.filter(exercise => id !== exercise.id )
-        //Call setExerciseList to set list to new array, thus deleting the object from array
-        setExerciseList(remainingExercises)
-    }
-
-    //Render ExerciseParam components
-    const exercise_list = exerciseList.map(exercise => (
-        // Iterates through entire exercise array and return a ExerciseParam component back 
-        // for each element in the array
-        <ExerciseParam 
-            id={exercise.id} 
-            exerciseName={exercise.exerciseName} 
-            weight={exercise.weight} 
-            sets={exercise.sets} 
-            reps={exercise.reps}
-            key={exercise.id}
-            deleteExercise={deleteExercise}
-        />
-    ))
 
     return (
         <div className="screen-container">
             <Header/>
 
+            {/* create selector that allows user to choose program */}
+            <div className="program-selector">
+
+                <label>Select Program
+                    <select onChange={(e) => setProgram(e.target.value)} id="selectProgram">
+                        <option value="Select a Program">Choose a Program</option>
+                        {/* Map through each of the programs in our programOptions array 
+                        and return an option element with the appropriate attribute */}
+                        {programOptions.map((program) => <option key={program.name} value={program.id}>{program.name}</option>)}
+                    </select>
+                </label>
+
+                <label>Routine Name
+                    <input
+                        type="text"
+                        placeholder="Enter Routine Name"
+                        value={routineName}
+                        onChange={(e) => setRoutineName(e.target.value)}
+                    />
+                </label> 
+
+                {/* Button to save routine */}
+                <button className='addRoutine' onClick={addRoutine}>Add Routine</button>
+            </div>
+
             {/* Form for adding exercises */}
             <form className="add-exercise" onSubmit={addExercise}>
-                {/* create selector that allows user to choose program */}
-                <div className="program-selector">
-
-                    <label>Select Program
-                        <select onChange={(e) => setProgram(e.target.value)} id="selectProgram">
-                            <option value="Select a Program">Choose a Program</option>
-                            {/* Map through each of the programs in our programOptions array 
-                            and return an option element with the appropriate attribute */}
-                            {programOptions.map((program) => <option key={program.name} value={program.id}>{program.name}</option>)}
-                        </select>
-                    </label>
-
-                    <label>Routine Name
-                        <input
-                            type="text"
-                            placeholder="Enter Routine Name"
-                            value={routineName}
-                            onChange={(e) => setRoutineName(e.target.value)}
-                        />
-                    </label> 
-                </div>
 
                 {/* input for exercise parameters */}
                 <div className="input-exercise-params">
@@ -239,7 +249,7 @@ function AddRoutineScreen() {
             
             {/* Render ExerciseParam Components */}
             <ul className="routineParam-container">
-                {exercise_list}
+                {/* {exercise_list} */}
             </ul>
             
             {/* Button to save workout -> POST to database */}

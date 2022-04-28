@@ -108,8 +108,6 @@ def createExercise(request):
     user = request.user
     data = request.data
 
-    print(data)
-
     exercise = Exercise.objects.create(
         user = user,
         name = data["exerciseName"]
@@ -156,14 +154,15 @@ def getWorkoutParams(request, routine_pk, exercise_pk):
 
 @api_view(['POST'])
 def createWorkoutParams(request, exercise_routine_pk):
+    data = request.data
 
     exerciseRoutine = ExerciseRoutine.objects.get(id=exercise_routine_pk)
 
     workoutParams = WorkoutParameter.objects.create(
         bridge_id = exerciseRoutine,
-        sets = 5,
-        reps = 5,
-        weight = 225
+        sets = data["sets"],
+        reps = data["reps"],
+        weight = data["weight"]
     )
 
     serializer = WorkoutParameterSerializer(workoutParams, many=False)
