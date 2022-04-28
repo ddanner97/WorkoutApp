@@ -49,6 +49,11 @@ import {
     EXERCISE_ROUTINE_CREATE_RESET,
 
     // PARAMETERS
+    EXERCISE_PARAM_CREATE_SUCCESS,
+    EXERCISE_PARAM_CREATE_FAIL,
+    EXERCISE_PARAM_CREATE_REQUEST,
+    EXERCISE_PARAM_CREATE_RESET,
+    
     EXERCISE_PARAM_SUCCESS,
     EXERCISE_PARAM_FAIL,
     EXERCISE_PARAM_REQUEST,
@@ -216,16 +221,16 @@ export const exerciseCreateReducer = (state = {}, action) => {
 // EXERCISE ROUTINES
 export const exerciseRoutineCreateReducer = (state = {}, action) => {
     switch(action.type){
-        case ROUTINE_CREATE_REQUEST:
+        case EXERCISE_ROUTINE_CREATE_REQUEST:
             return { loading: true }
 
-        case ROUTINE_CREATE_SUCCESS:
+        case EXERCISE_ROUTINE_CREATE_SUCCESS:
             return { loading: false, success: true, exerciseRoutine: action.payload }
         
-        case ROUTINE_CREATE_FAIL:
+        case EXERCISE_ROUTINE_CREATE_FAIL:
             return { loading: false, error: action.payload }
 
-        case ROUTINE_CREATE_RESET:
+        case EXERCISE_ROUTINE_CREATE_RESET:
             return { }
 
         default:
@@ -244,6 +249,25 @@ export const exerciseParamReducer = (state = { parameters: [] }, action) => {
         
         case EXERCISE_PARAM_FAIL:
             return { loading: false, error: action.payload }
+
+        default:
+            return state
+    }
+}
+
+export const parameterCreateReducer = (state = {}, action) => {
+    switch(action.type){
+        case EXERCISE_PARAM_CREATE_REQUEST:
+            return { loading: true }
+
+        case EXERCISE_PARAM_CREATE_SUCCESS:
+            return { loading: false, success: true, parameters: action.payload }
+        
+        case EXERCISE_PARAM_CREATE_FAIL:
+            return { loading: false, error: action.payload }
+
+        case EXERCISE_PARAM_CREATE_RESET:
+            return { }
 
         default:
             return state

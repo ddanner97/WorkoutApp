@@ -45,6 +45,11 @@ import {
     EXERCISE_ROUTINE_CREATE_REQUEST,
 
     // PARAMETERS
+    EXERCISE_PARAM_CREATE_SUCCESS,
+    EXERCISE_PARAM_CREATE_FAIL,
+    EXERCISE_PARAM_CREATE_REQUEST,
+    EXERCISE_PARAM_CREATE_RESET,
+
     EXERCISE_PARAM_SUCCESS,
     EXERCISE_PARAM_FAIL,
     EXERCISE_PARAM_REQUEST,
@@ -346,8 +351,6 @@ export const createExerciseRoutine = (exerciseRoutine) => async (dispatch, getSt
             },
         };
 
-        console.log(exerciseRoutine)
-
         // Make API call to create product
         const { data } =  await axios.post(
             `/api/programs/exercise-routine-create/routine/${exerciseRoutine.routine_pk}/exercise/${exerciseRoutine.exercise_pk}/`,
@@ -393,6 +396,46 @@ export const listExerciseParams = (routine_id, exerciseIdList) => async (dispatc
         dispatch({
             type: EXERCISE_PARAM_FAIL,
             payload: error.response && error.response.data.detail 
+            ? error.response.data.detail 
+            : error.message
+        })
+    }
+}
+
+export const createParam = (parameters) => async (dispatch, getState) => {
+    try{
+        dispatch({ type: EXERCISE_PARAM_CREATE_REQUEST})
+
+        const {
+            userLogin: { userInfo },
+        } = getState()
+
+        // Pulling out the current user we are logged in as 
+        const config = {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
+
+        console.log(parameters)
+
+        // Make API call to create product
+        const { data } =  await axios.post(
+            `/api/programs/workout-params-create/${parameters.bridge_id}/`,
+            parameters,
+            config
+        )
+
+        dispatch({
+            type: EXERCISE_PARAM_CREATE_SUCCESS,
+            payload: data,
+        })
+
+    } catch (error) {
+        dispatch({
+            type: EXERCISE_PARAM_CREATE_FAIL,
+            payload: error.response && error.response.data.detail
             ? error.response.data.detail 
             : error.message
         })
