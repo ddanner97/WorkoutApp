@@ -1,5 +1,6 @@
 import React from "react";
-// import "./ControlButtons.css";
+// Import Styles
+import '../static/styles/components/StopWatch/stopwatch.css';
   
 export default function ControlButtons(props) {
   const StartButton = (

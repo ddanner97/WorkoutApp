@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-// import "./StopWatch.css";
+
+// Import Styles
+import '../static/styles/components/StopWatch/stopwatch.css';
+
+// Import components
 import Timer from "../components/Timer";
 import ControlButtons from "../components/ControlButtons";
 

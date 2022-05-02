@@ -13,8 +13,13 @@
       grid-template-columns: 80% 20%;
       padding: 2rem;
 
-      > button {
-          color: #ed8089;
+      .button-container {
+        display: grid;
+
+        .fa-trash {
+          color: rgb(242, 107, 107);
+        }
+
       }
     }
 

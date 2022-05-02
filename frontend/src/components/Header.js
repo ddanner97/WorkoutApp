@@ -21,7 +21,10 @@ function Header() {
 
     //Logout function
     const logoutHandler = () => {
-        dispatch(logout())  
+        dispatch(logout()) 
+        
+        const redirect = `/login`
+        history(redirect)
     }
 
     //dropdown menu

@@ -38,10 +38,6 @@ function RoutineScreen() {
     const routineExercises = useSelector(state => state.routineExercises)
     const { error, loading, exercises } = routineExercises
 
-    // Getting Parameters
-    const exerciseParameters = useSelector(state => state.exerciseParameters)
-    const { paramError, paramLoading, parameters } = exerciseParameters
-
     // ** ACTIONS **
     // Get exercises action
     useEffect(() => {
@@ -49,22 +45,6 @@ function RoutineScreen() {
         dispatch(listRoutineExercises(program_id, routine_id))
 
     }, [dispatch])
-
-    // Get Parameter action
-    useEffect(() => {
-        // Call Action once GET method for excrcises is finished
-        if(exercises) {
-            // GET all exercise ids
-            const exerciseIdList = [];
-            
-            for (let i = 0; i < exercises.length; i++){
-                exerciseIdList.push(exercises[i].id)
-            }
-
-            dispatch(listExerciseParams(routine_id, exerciseIdList))  
-        }
-
-    }, [dispatch], )
 
     // Get Program Name for display *Has to be a better way to do this such as passing in prop*
     let routineName = ''
@@ -85,16 +65,15 @@ function RoutineScreen() {
             <StopWatch/>
          
             {/* Ternary operator: If loading == True render loading, If error == render error, else render page */}
-            { paramLoading ? <Loader/> 
-                : paramError ? <ErrorMessage>{error}</ErrorMessage>
+            { loading ? <Loader/> 
+                : error ? <ErrorMessage>{error}</ErrorMessage>
                     :
                     <div className="card-container">
-                        {/* render Program */}
 
-                        {exercises && parameters ? (
-                                exercises.map((exercise, index) => (
+                        {exercises ? (
+                                exercises.data?.map((exercise, index) => (
                                     // Render Routines
-                                    <Exercise key={exercise.id} exercise_params={parameters[index]} exercise={exercise}/>
+                                    <Exercise key={exercise.id} exercise_params={exercises.exerciseParams[index]} exercise={exercise}/>
                                 ))
                             ) : (
                                 exercises.map((exercise) => (

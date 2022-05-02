@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
 
+/* REACT ROUTER */
+import {useNavigate} from "react-router-dom";
+
 // Import Style
 import '../static/styles/screens/HomeScreen/homeScreen.css';
 
@@ -17,6 +20,8 @@ import Header from '../components/Header';
 
 
 function HomeScreen() {
+    const history = useNavigate();
+
     const state = {...store.getState()}
     const { userInfo } = state.userLogin
     const userId = state.userLogin.userInfo.id
@@ -27,7 +32,7 @@ function HomeScreen() {
     const { error, loading, programs } = programList
 
     const programDelete = useSelector(state => state.programList)
-    const { error:errorDelete, loading:loadingDelete, success:successDelete } = programDelete
+    const { error:errorDelete, loading:loadingDelete, success: successDelete } = programDelete
 
     useEffect(() => {
 
@@ -37,10 +42,18 @@ function HomeScreen() {
 
     const deleteHandler = (program_id) => {
 
-        if (window.confirm('Are you sure you want to delete this program?')) {
+        if (window.confirm(`Are you sure you want to delete this program? Program ${program_id}`)) {
             // delete program
             dispatch(deleteProgram(program_id))
+            
         }
+    }
+
+    const updateProgram = (program_id) => {
+        
+        const redirect = `/program/${program_id}/edit`
+        history(redirect)
+
     }
 
     return (
@@ -64,13 +77,18 @@ function HomeScreen() {
                         {programs.map(program => (
                             <div className='program-card' key={program.id}>
                                 <Program key={program.id} program={program}/>
-                                <button id={program.id} onClick={(e) => deleteHandler(e.target.id)}>
-                                    <i className="fas fa-trash"></i>
-                                </button>
+                                <div className="button-container">
+                                    <button id={program.id} onClick={() => deleteHandler(program.id)}>
+                                        <i className="fas fa-trash"></i>
+                                    </button>
+                                    <button id={program.id} onClick={() => updateProgram(program.id)}>
+                                        <i className="fas fa-edit"></i>
+                                    </button>
+                                </div>
+                                
                             </div>
                         ))}
                     </div>
-
             }
         </div>
     )

@@ -10,11 +10,13 @@ import store from '../redux/store';
 
 /* ACTION CREATORS */
 import { createRoutine, createExercise, createExerciseRoutine, createParam } from "../redux/actions/programActions";
+import { listRoutineExercises } from '../redux/actions/programActions' //Listing actions
 
 /* ACTION TYPES */
 import { ROUTINE_CREATE_RESET, EXERCISE_CREATE_RESET, EXERCISE_ROUTINE_CREATE_RESET, EXERCISE_PARAM_CREATE_RESET } from '../redux/constants/programConstants';
 
 //Import Components
+import Exercise from '../components/Exercise'
 import Loader from '../components/Loader';
 import ErrorMessage from '../components/ErrorMessage';
 import Header from '../components/Header';
@@ -55,6 +57,11 @@ function AddRoutineScreen() {
     const exerciseRoutineCreate = useSelector(state => state.exerciseRoutineCreate)
     const { error: errorExerciseRoutineCreate, loading: loadingExerciseRoutineCreate, success: successExerciseRoutineCreate } = exerciseRoutineCreate
 
+    // Listing Exercises
+    // List of Exercises -> use spread operator to unpack elements from routineExercises
+    const routineExercises = useSelector(state => state.routineExercises)
+    const { error, loading, exercises } = routineExercises
+
     useEffect(() => {
 
         if (successExerciseCreate) {
@@ -71,8 +78,6 @@ function AddRoutineScreen() {
         } 
 
         if (successExerciseRoutineCreate) {
-            //set all parameters = to matching exercise parameters
-            console.log(exerciseRoutineCreate.exerciseRoutine.id)
 
             //dispatch create workout params
             dispatch(createParam({
@@ -87,6 +92,9 @@ function AddRoutineScreen() {
             setWeight("")
             setSets("")
             setReps("")
+
+
+            dispatch(listRoutineExercises(program_id, routineCreate.routine.id))
 
             // reset
             dispatch({ type: EXERCISE_ROUTINE_CREATE_RESET })
@@ -194,7 +202,7 @@ function AddRoutineScreen() {
             </div>
 
             {/* Form for adding exercises */}
-            <form className="add-exercise" onSubmit={addExercise}>
+            <form className="add-exercise-form" onSubmit={addExercise}>
 
                 {/* input for exercise parameters */}
                 <div className="input-exercise-params">
@@ -251,6 +259,28 @@ function AddRoutineScreen() {
             <ul className="routineParam-container">
                 {/* {exercise_list} */}
             </ul>
+
+            {/* Ternary operator: If loading == True render loading, If error == render error, else render page */}
+            { loading ? <Loader/> 
+                : error ? <ErrorMessage>{error}</ErrorMessage>
+                    :
+                    <div className="card-container">
+
+                        {exercises ? (
+                                exercises.data?.map((exercise, index) => (
+                                    // Render Routines
+                                    <Exercise key={exercise.id} exercise_params={exercises.exerciseParams[index]} exercise={exercise}/>
+                                ))
+                            ) : (
+                                exercises.map((exercise) => (
+                                    // Render Routines
+                                    <h3>{exercise.name}</h3>
+                                ))
+                        )}
+                    </div>
+
+            }
+            
             
             {/* Button to save workout -> POST to database */}
             <button className='saveWorkout' onClick={saveWorkout}>Save Workout</button>
