@@ -120,6 +120,7 @@ export const deleteProgram = (program_id) => async (dispatch, getState) => {
 
         dispatch({
             type: PROGRAM_DELETE_SUCCESS,
+            program_id,
         })
 
     } catch (error) {

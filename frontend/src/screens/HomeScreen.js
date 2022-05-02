@@ -32,7 +32,7 @@ function HomeScreen() {
     const { error, loading, programs } = programList
 
     const programDelete = useSelector(state => state.programList)
-    const { error:errorDelete, loading:loadingDelete, success:successDelete } = programDelete
+    const { error:errorDelete, loading:loadingDelete, success: successDelete } = programDelete
 
     useEffect(() => {
 
@@ -42,10 +42,10 @@ function HomeScreen() {
 
     const deleteHandler = (program_id) => {
 
-        if (window.confirm('Are you sure you want to delete this program?')) {
+        if (window.confirm(`Are you sure you want to delete this program? Program ${program_id}`)) {
             // delete program
-            console.log(program_id)
             dispatch(deleteProgram(program_id))
+            
         }
     }
 
@@ -78,10 +78,10 @@ function HomeScreen() {
                             <div className='program-card' key={program.id}>
                                 <Program key={program.id} program={program}/>
                                 <div className="button-container">
-                                    <button id={program.id} onClick={(e) => deleteHandler(e.target.id)}>
+                                    <button id={program.id} onClick={() => deleteHandler(program.id)}>
                                         <i className="fas fa-trash"></i>
                                     </button>
-                                    <button id={program.id} onClick={(e) => updateProgram(e.target.id)}>
+                                    <button id={program.id} onClick={() => updateProgram(program.id)}>
                                         <i className="fas fa-edit"></i>
                                     </button>
                                 </div>

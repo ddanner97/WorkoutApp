@@ -98,7 +98,7 @@ export const programDeleteReducer = (state = {}, action) => {
             return { loading: true }
 
         case PROGRAM_DELETE_SUCCESS:
-            return { loading: false, success: true, product: action.payload }
+            return { loading: false, success: true,}
         
         case PROGRAM_DELETE_FAIL:
             return { loading: false, error: action.payload }
