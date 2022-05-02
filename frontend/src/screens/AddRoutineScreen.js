@@ -202,7 +202,7 @@ function AddRoutineScreen() {
             </div>
 
             {/* Form for adding exercises */}
-            <form className="add-exercise" onSubmit={addExercise}>
+            <form className="add-exercise-form" onSubmit={addExercise}>
 
                 {/* input for exercise parameters */}
                 <div className="input-exercise-params">

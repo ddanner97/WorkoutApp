@@ -57,7 +57,7 @@ function AddScreen({ }) {
     }
 
     return (
-        <div className="screen-container">
+        <div className="add-screen-container">
                 <Header/>
 
                 <h1>Add Screen</h1>
@@ -66,14 +66,16 @@ function AddScreen({ }) {
                 {loadingCreate && <Loader />}
                 {errorCreate && <ErrorMessage variant='danger>'>{errorCreate}</ErrorMessage>}
 
-                <button onClick={createProgramHandler}>
-                    + Create Program
-                </button>
+                <div className="btn-add-screen">
+                    <button onClick={createProgramHandler}>
+                        + Create Program
+                    </button>
 
-                
-                <button>
-                    <Link style={{ textDecoration: 'none', color: 'black' }} to={'/add-routine'}>Add Routine</Link>
-                </button>
+                    
+                    <button>
+                        <Link style={{ textDecoration: 'none', color: 'black' }} to={'/add-routine'}>Add Routine</Link>
+                    </button>
+                </div>
 
         </div>
     )

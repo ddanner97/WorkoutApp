@@ -44,6 +44,7 @@ function HomeScreen() {
 
         if (window.confirm('Are you sure you want to delete this program?')) {
             // delete program
+            console.log(program_id)
             dispatch(deleteProgram(program_id))
         }
     }
@@ -88,7 +89,6 @@ function HomeScreen() {
                             </div>
                         ))}
                     </div>
-
             }
         </div>
     )
