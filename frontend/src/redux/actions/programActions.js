@@ -279,13 +279,27 @@ export const listRoutineExercises = (program_id, routine_id) => async (dispatch)
     try{
         dispatch({ type: ROUTINE_EXERCISES_REQUEST})
 
+        //Array to hold exercise object: Exercise + Parameters
+        const exerciseParams = []
+        const promises = []
+        const exercises = []
+
         const { data } =  await axios.get(`/api/programs/${program_id}/routine/${routine_id}`)
 
-        console.log(data)
+        for (let i = 0; i < data.length; i++){
+            promises.push(
+                axios.get(`/api/programs/routine/${routine_id}/exercise/${data[i].id}/`).then(response => {
+                    //Do something with response
+                    exerciseParams.push(response)
+                })
+            )
+        }
+
+        Promise.all(promises).then(() => {})
 
         dispatch({
             type: ROUTINE_EXERCISES_SUCCESS,
-            payload: data
+            payload: {data, exerciseParams},
         })
 
     } catch (error) {
@@ -389,6 +403,8 @@ export const listExerciseParams = (routine_id, exerciseIdList) => async (dispatc
             exerciseParams2.push(data)
         }
 
+        console.log(exerciseParams2)
+
         dispatch({
             type: EXERCISE_PARAM_SUCCESS,
             payload: exerciseParams2
@@ -419,8 +435,6 @@ export const createParam = (parameters) => async (dispatch, getState) => {
               Authorization: `Bearer ${userInfo.token}`,
             },
         };
-
-        console.log(parameters)
 
         // Make API call to create product
         const { data } =  await axios.post(

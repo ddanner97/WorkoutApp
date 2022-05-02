@@ -13,8 +13,9 @@ function Exercise({ exercise, exercise_params}) {
         <div style={{ textDecoration: 'none' }}>
             <div>
                 <h3>{exercise.name} </h3>
+                
                 {exercise_params ? (
-                    exercise_params.map(parameter => (
+                    exercise_params.data.map(parameter => (
                         <>
                             <h4 key={1}>{parameter.sets} sets</h4>
                             <h4 key={2}>{parameter.reps} reps</h4>

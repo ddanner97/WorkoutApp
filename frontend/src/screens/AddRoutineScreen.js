@@ -62,10 +62,6 @@ function AddRoutineScreen() {
     const routineExercises = useSelector(state => state.routineExercises)
     const { error, loading, exercises } = routineExercises
 
-    // Getting Parameters
-    const exerciseParameters = useSelector(state => state.exerciseParameters)
-    const { paramError, paramLoading, parameters } = exerciseParameters
-
     useEffect(() => {
 
         if (successExerciseCreate) {
@@ -265,16 +261,15 @@ function AddRoutineScreen() {
             </ul>
 
             {/* Ternary operator: If loading == True render loading, If error == render error, else render page */}
-            { paramLoading ? <Loader/> 
-                : paramError ? <ErrorMessage>{error}</ErrorMessage>
+            { loading ? <Loader/> 
+                : error ? <ErrorMessage>{error}</ErrorMessage>
                     :
                     <div className="card-container">
-                        {/* render Program */}
 
-                        {exercises && parameters ? (
-                                exercises.map((exercise, index) => (
+                        {exercises ? (
+                                exercises.data?.map((exercise, index) => (
                                     // Render Routines
-                                    <Exercise key={exercise.id} exercise_params={parameters[index]} exercise={exercise}/>
+                                    <Exercise key={exercise.id} exercise_params={exercises.exerciseParams[index]} exercise={exercise}/>
                                 ))
                             ) : (
                                 exercises.map((exercise) => (
@@ -285,6 +280,7 @@ function AddRoutineScreen() {
                     </div>
 
             }
+            
             
             {/* Button to save workout -> POST to database */}
             <button className='saveWorkout' onClick={saveWorkout}>Save Workout</button>
