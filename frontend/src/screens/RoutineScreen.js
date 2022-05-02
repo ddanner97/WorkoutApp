@@ -48,11 +48,6 @@ function RoutineScreen() {
 
         dispatch(listRoutineExercises(program_id, routine_id))
 
-    }, [dispatch])
-
-    // Get Parameter action
-    useEffect(() => {
-        // Call Action once GET method for excrcises is finished
         if(exercises) {
             // GET all exercise ids
             const exerciseIdList = [];
@@ -64,7 +59,7 @@ function RoutineScreen() {
             dispatch(listExerciseParams(routine_id, exerciseIdList))  
         }
 
-    }, [dispatch], )
+    }, [dispatch])
 
     // Get Program Name for display *Has to be a better way to do this such as passing in prop*
     let routineName = ''

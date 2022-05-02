@@ -281,6 +281,8 @@ export const listRoutineExercises = (program_id, routine_id) => async (dispatch)
 
         const { data } =  await axios.get(`/api/programs/${program_id}/routine/${routine_id}`)
 
+        console.log(data)
+
         dispatch({
             type: ROUTINE_EXERCISES_SUCCESS,
             payload: data
