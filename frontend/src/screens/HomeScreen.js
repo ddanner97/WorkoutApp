@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
 
+/* REACT ROUTER */
+import {useNavigate} from "react-router-dom";
+
 // Import Style
 import '../static/styles/screens/HomeScreen/homeScreen.css';
 
@@ -17,6 +20,8 @@ import Header from '../components/Header';
 
 
 function HomeScreen() {
+    const history = useNavigate();
+
     const state = {...store.getState()}
     const { userInfo } = state.userLogin
     const userId = state.userLogin.userInfo.id
@@ -43,6 +48,13 @@ function HomeScreen() {
         }
     }
 
+    const updateProgram = (program_id) => {
+        
+        const redirect = `/program/${program_id}/edit`
+        history(redirect)
+
+    }
+
     return (
         <div className="screen-container">
             <Header/>
@@ -64,9 +76,15 @@ function HomeScreen() {
                         {programs.map(program => (
                             <div className='program-card' key={program.id}>
                                 <Program key={program.id} program={program}/>
-                                <button id={program.id} onClick={(e) => deleteHandler(e.target.id)}>
-                                    <i className="fas fa-trash"></i>
-                                </button>
+                                <div className="button-container">
+                                    <button id={program.id} onClick={(e) => deleteHandler(e.target.id)}>
+                                        <i className="fas fa-trash"></i>
+                                    </button>
+                                    <button id={program.id} onClick={(e) => updateProgram(e.target.id)}>
+                                        <i className="fas fa-edit"></i>
+                                    </button>
+                                </div>
+                                
                             </div>
                         ))}
                     </div>

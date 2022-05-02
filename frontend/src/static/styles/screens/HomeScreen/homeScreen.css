@@ -14,8 +14,12 @@
   padding: 2rem;
 }
 
-.program-card-container .program-card > button {
-  color: #ed8089;
+.program-card-container .program-card .button-container {
+  display: grid;
+}
+
+.program-card-container .program-card .button-container .fa-trash {
+  color: #f26b6b;
 }
 
 .program-card-container > * {
