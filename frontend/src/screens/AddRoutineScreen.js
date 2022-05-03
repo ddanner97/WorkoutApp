@@ -65,40 +65,38 @@ function AddRoutineScreen() {
     useEffect(() => {
 
         if (successExerciseCreate) {
-            let routine_pk = routineCreate.routine.id
-            let exercise_pk = exerciseCreate.exercise.id
-
-            // dispatch create exercise routine bridge
-            dispatch(createExerciseRoutine({
-               routine_pk,
-               exercise_pk,
-            }))
-
-            dispatch({ type: EXERCISE_CREATE_RESET })            
-        } 
-
-        if (successExerciseRoutineCreate) {
-
-            //dispatch create workout params
-            dispatch(createParam({
-                bridge_id: exerciseRoutineCreate.exerciseRoutine.id,
-                sets,
-                reps,
-                weight,
-            }))
-
             // Clear input fields after submitting
             setExercise("")
             setWeight("")
             setSets("")
             setReps("")
 
+            dispatch({ type: EXERCISE_CREATE_RESET })
+            dispatch(listRoutineExercises(program_id, routineCreate.routine.id))            
+        } 
 
-            dispatch(listRoutineExercises(program_id, routineCreate.routine.id))
+        // if (successExerciseRoutineCreate) {
 
-            // reset
-            dispatch({ type: EXERCISE_ROUTINE_CREATE_RESET })
-        }
+        //     //dispatch create workout params
+        //     dispatch(createParam({
+        //         bridge_id: exerciseRoutineCreate.exerciseRoutine.id,
+        //         sets,
+        //         reps,
+        //         weight,
+        //     }))
+
+        //     // Clear input fields after submitting
+        //     setExercise("")
+        //     setWeight("")
+        //     setSets("")
+        //     setReps("")
+
+
+        //     dispatch(listRoutineExercises(program_id, routineCreate.routine.id))
+
+        //     // reset
+        //     dispatch({ type: EXERCISE_ROUTINE_CREATE_RESET })
+        // }
 
     }, [createExercise, successExerciseCreate, createExerciseRoutine, successExerciseRoutineCreate])
     
@@ -132,8 +130,8 @@ function AddRoutineScreen() {
         // Create Routine -> Send data to action
         dispatch(
             createRoutine({
-              program_id,
-              routineName,
+                program_id,
+                routineName,
             })
         );
     }
@@ -168,7 +166,11 @@ function AddRoutineScreen() {
         }
 
         dispatch(createExercise({
-            exerciseName: exercise
+            routine: routineCreate.routine.id,
+            exerciseName: exercise,
+            sets,
+            reps,
+            weight,
         }))
     }
 
@@ -267,9 +269,9 @@ function AddRoutineScreen() {
                     <div className="card-container">
 
                         {exercises ? (
-                                exercises.data?.map((exercise, index) => (
+                                exercises.map((exercise, index) => (
                                     // Render Routines
-                                    <Exercise key={exercise.id} exercise_params={exercises.exerciseParams[index]} exercise={exercise}/>
+                                    <Exercise key={exercise.id} exercise_params={exercises[index]} exercise={exercise}/>
                                 ))
                             ) : (
                                 exercises.map((exercise) => (

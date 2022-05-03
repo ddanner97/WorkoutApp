@@ -42,6 +42,10 @@ import {
     EXERCISE_CREATE_REQUEST,
     EXERCISE_CREATE_RESET,
 
+    EXERCISE_DELETE_SUCCESS,
+    EXERCISE_DELETE_FAIL,
+    EXERCISE_DELETE_REQUEST,
+
     // EXERCISE ROUTINES
     EXERCISE_ROUTINE_CREATE_SUCCESS,
     EXERCISE_ROUTINE_CREATE_FAIL,
@@ -212,6 +216,22 @@ export const exerciseCreateReducer = (state = {}, action) => {
 
         case EXERCISE_CREATE_RESET:
             return { }
+
+        default:
+            return state
+    }
+}
+
+export const exerciseDeleteReducer = (state = {}, action) => {
+    switch(action.type){
+        case EXERCISE_DELETE_REQUEST:
+            return { loading: true }
+
+        case EXERCISE_DELETE_SUCCESS:
+            return { loading: false, success: true,}
+        
+        case EXERCISE_DELETE_FAIL:
+            return { loading: false, error: action.payload }
 
         default:
             return state

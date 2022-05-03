@@ -91,26 +91,40 @@ def createRoutine(request, program_pk):
 @api_view(['GET'])
 def getExercises(request, program_pk, routine_pk):
    
-    exerciseRoutine = ExerciseRoutine.objects.all().filter(routine=routine_pk)
-    exercises = []
+    exercises = Exercise.objects.all().filter(routine=routine_pk)
+    # exercises = []
 
     # Get all exercises
-    for i in exerciseRoutine:
-        exercise = Exercise.objects.get(id=i.exercise.id)
-        exercises.append(exercise)
+    # for i in exerciseRoutine:
+    #     exercise = Exercise.objects.get(id=i.exercise.id)
+    #     exercises.append(exercise)
 
     serializer = ExerciseSerializer(exercises, many=True)
 
     return Response(serializer.data)
 
+@api_view(['DELETE'])
+def deleteExercise(request, exercise_pk):
+    exercise = Exercise.objects.all().get(id = exercise_pk)
+    exercise.delete()
+    return Response('Product Deleted')
+
 @api_view(['POST'])
-def createExercise(request):
+def createExercise(request, routine_pk):
     user = request.user
     data = request.data
 
+    routine = Routine.objects.get(id=routine_pk)
+
+    print(data)
+
     exercise = Exercise.objects.create(
         user = user,
-        name = data["exerciseName"]
+        routine = routine,
+        name = data["exerciseName"],
+        sets = data["sets"],
+        reps = data["reps"],
+        weight = data["weight"]
     )
 
     serializer = ExerciseSerializer(exercise, many=False)

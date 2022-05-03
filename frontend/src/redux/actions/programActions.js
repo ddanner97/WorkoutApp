@@ -39,6 +39,10 @@ import {
     EXERCISE_CREATE_FAIL,
     EXERCISE_CREATE_REQUEST,
 
+    EXERCISE_DELETE_SUCCESS,
+    EXERCISE_DELETE_FAIL,
+    EXERCISE_DELETE_REQUEST,
+
     // EXERCISE ROUTINE BRIDGE
     EXERCISE_ROUTINE_CREATE_SUCCESS,
     EXERCISE_ROUTINE_CREATE_FAIL,
@@ -281,26 +285,27 @@ export const listRoutineExercises = (program_id, routine_id) => async (dispatch)
         dispatch({ type: ROUTINE_EXERCISES_REQUEST})
 
         //Array to hold exercise object: Exercise + Parameters
-        const exerciseParams = []
-        const promises = []
-        const exercises = []
+        // const exerciseParams = []
+        // const promises = []
+        // const exercises = []
 
         const { data } =  await axios.get(`/api/programs/${program_id}/routine/${routine_id}`)
+        console.log(data)
 
-        for (let i = 0; i < data.length; i++){
-            promises.push(
-                axios.get(`/api/programs/routine/${routine_id}/exercise/${data[i].id}/`).then(response => {
-                    //Do something with response
-                    exerciseParams.push(response)
-                })
-            )
-        }
+        // for (let i = 0; i < data.length; i++){
+        //     promises.push(
+        //         axios.get(`/api/programs/routine/${routine_id}/exercise/${data[i].id}/`).then(response => {
+        //             //Do something with response
+        //             exerciseParams.push(response)
+        //         })
+        //     )
+        // }
 
-        Promise.all(promises).then(() => {})
+        // Promise.all(promises).then(() => {})
 
         dispatch({
             type: ROUTINE_EXERCISES_SUCCESS,
-            payload: {data, exerciseParams},
+            payload: data,
         })
 
     } catch (error) {
@@ -331,7 +336,7 @@ export const createExercise = (exercise) => async (dispatch, getState) => {
 
         // Make API call to create product
         const { data } =  await axios.post(
-            `/api/programs/exercise-create/`,
+            `/api/programs/exercise-create/${exercise.routine}`,
             exercise,
             config
         )
@@ -344,6 +349,41 @@ export const createExercise = (exercise) => async (dispatch, getState) => {
     } catch (error) {
         dispatch({
             type: EXERCISE_CREATE_FAIL,
+            payload: error.response && error.response.data.detail
+            ? error.response.data.detail 
+            : error.message
+        })
+    }
+}
+
+export const deleteExercise = (exercise_id) => async (dispatch, getState) => {
+    try{
+        dispatch({ type: EXERCISE_DELETE_REQUEST})
+
+        const {
+            userLogin: { userInfo },
+        } = getState()
+
+        const config = {
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
+
+        const { data } =  await axios.delete(
+            `/api/programs/exercise-delete/${exercise_id}`,
+            config
+        )
+
+        dispatch({
+            type: EXERCISE_DELETE_SUCCESS,
+            exercise_id,
+        })
+
+    } catch (error) {
+        dispatch({
+            type: EXERCISE_DELETE_FAIL,
             payload: error.response && error.response.data.detail
             ? error.response.data.detail 
             : error.message

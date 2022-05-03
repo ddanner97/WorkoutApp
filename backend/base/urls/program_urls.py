@@ -19,7 +19,8 @@ urlpatterns = [
 
     # Exercise URLS
     path('<str:program_pk>/routine/<str:routine_pk>/', views.getExercises, name='exercises'),
-    path('exercise-create/', views.createExercise, name='exercise-create'),
+    path('exercise-create/<str:routine_pk>', views.createExercise, name='exercise-create'),
+    path('exercise-delete/<str:exercise_pk>', views.deleteExercise, name='exercise-delete'),
 
     # Exercise Routine URL
     path('exercise-routine-create/routine/<str:routine_pk>/exercise/<str:exercise_pk>/', views.createExerciseRoutine, name='exercise-routine-create'),

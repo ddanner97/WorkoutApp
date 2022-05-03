@@ -22,8 +22,12 @@ class Routine(models.Model):
         return str(self.name) + ' - ' + str(self.program) 
 
 class Exercise(models.Model):
+    routine = models.ForeignKey(Routine, on_delete=CASCADE, null=False)
     name = models.CharField(max_length=200)
     user = models.ForeignKey(User, on_delete=CASCADE, null=False)
+    sets = models.IntegerField()
+    reps = models.IntegerField()
+    weight = models.DecimalField(max_digits=7, decimal_places=2)
 
     def __str__(self):
         return str(self.name) + ' - ' + str(self.user.first_name) 
